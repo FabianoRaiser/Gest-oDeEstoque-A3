@@ -71,6 +71,10 @@ Antes de executar o sistema, certifique-se de ter o seguintes recursos instalado
 | Deve ser implementada uma interface gráfica intuitiva para facilitar a interação dos usuários com o sistema.  |
 | Todas as operações de CRUD (Create, Read, Update, Delete) devem ser implementadas de forma segura e eficiente |
 
+### Diagrama de Classes
+
+Você pode acesar o diagrama de Classes [aqui](https://drive.google.com/file/d/11f7P4cSEUSHxLz8FmXmC9EYxDwW_D0hK/view?usp=sharing)
+
 ## Contribuição
 
 Sinta-se à vontade para contribuir com melhorias, correções de bugs ou novas funcionalidades. Abra uma **issue** ou envie um **pull request**!
