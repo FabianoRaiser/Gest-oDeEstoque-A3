@@ -10,6 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class estoque {
 
@@ -135,5 +137,15 @@ public class estoque {
 		JButton PESQUISAR_BTN = new JButton("PESQUISAR");
 		PESQUISAR_BTN.setBounds(10, 87, 112, 23);
 		frameEstoque.getContentPane().add(PESQUISAR_BTN);
+		
+		JButton CADASTRAR_BTN = new JButton("CADASTRAR");
+		CADASTRAR_BTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CadastroPeca cadastro = new CadastroPeca();
+				cadastro.setVisible(true);
+			}
+		});
+		CADASTRAR_BTN.setBounds(548, 27, 93, 23);
+		frameEstoque.getContentPane().add(CADASTRAR_BTN);
 	}
 }
