@@ -13,7 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-public class CadastroPeca extends JFrame {
+public class EditarPeca extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -27,42 +27,41 @@ public class CadastroPeca extends JFrame {
 	private JTextField VALOR_INPUT;
 
 	private void ValidaDados() {
-		System.out.println(NOME_INPUT.getText().isEmpty());
-			if(NOME_INPUT.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "O CAMPO NOME NÃO PODE ESTÁ VAZIO!");
-			}
-			if(PESO_INPUT.getText().isEmpty() ) {
-				JOptionPane.showMessageDialog(null, "O CAMPO PESO NÃO PODE ESTÁ VAZIO!");
-			}
-			if(MEDIDA_INPUT.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "O CAMPO MEDIDA NÃO PODE ESTÁ VAZIO!");
-			}
-			if(MARCA_INPUT.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "O CAMPO MARCA NÃO PODE ESTÁ VAZIO!");
-			}
-			if(MODELO_INPUT.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "O CAMPO MODELO NÃO PODE ESTÁ VAZIO!");
-			}
-			if(ANO_INPUT.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "O CAMPO ANO NÃO PODE ESTÁ VAZIO!");
-			}
-			if(COR_INPUT.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "O CAMPO COR NÃO PODE ESTÁ VAZIO!");
-			}
-			if(VALOR_INPUT.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "O CAMPO VALOR NÃO PODE ESTÁ VAZIO!");
-			}
+//			if(NOME_INPUT.getText().isEmpty()) {
+//				JOptionPane.showMessageDialog(null, "O CAMPO NOME NÃO PODE ESTÁ VAZIO!");
+//			}
+//			if(PESO_INPUT.getText().isEmpty() ) {
+//				JOptionPane.showMessageDialog(null, "O CAMPO PESO NÃO PODE ESTÁ VAZIO!");
+//			}
+//			if(MEDIDA_INPUT.getText().isEmpty()) {
+//				JOptionPane.showMessageDialog(null, "O CAMPO MEDIDA NÃO PODE ESTÁ VAZIO!");
+//			}
+//			if(MARCA_INPUT.getText().isEmpty()) {
+//				JOptionPane.showMessageDialog(null, "O CAMPO MARCA NÃO PODE ESTÁ VAZIO!");
+//			}
+//			if(MODELO_INPUT.getText().isEmpty()) {
+//				JOptionPane.showMessageDialog(null, "O CAMPO MODELO NÃO PODE ESTÁ VAZIO!");
+//			}
+//			if(ANO_INPUT.getText().isEmpty()) {
+//				JOptionPane.showMessageDialog(null, "O CAMPO ANO NÃO PODE ESTÁ VAZIO!");
+//			}
+//			if(COR_INPUT.getText().isEmpty()) {
+//				JOptionPane.showMessageDialog(null, "O CAMPO COR NÃO PODE ESTÁ VAZIO!");
+//			}
+//			if(VALOR_INPUT.getText().isEmpty()) {
+//				JOptionPane.showMessageDialog(null, "O CAMPO VALOR NÃO PODE ESTÁ VAZIO!");
+//			}
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public CadastroPeca() {	
+	public EditarPeca() {	
 		
 		// Config da janela
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 224);
-		setTitle("Novo Cadastro de Peça");
+		setTitle("Editar Peça");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -76,7 +75,7 @@ public class CadastroPeca extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ValidaDados();
 				
-				// >> CRUD INSERT
+				// >> CRUD UPDATE
 				
 				//JOptionPane.showMessageDialog(null, "Peça cadastrada!");
 			}
@@ -92,6 +91,19 @@ public class CadastroPeca extends JFrame {
 		});
 		CANCELAR_BTN.setBounds(359, 149, 110, 23);
 		contentPane.add(CANCELAR_BTN);
+		
+		JButton DELETAR_BTN = new JButton("DELETAR");
+		DELETAR_BTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int escolha = JOptionPane.showConfirmDialog(null, "DELETAR ITEM?", "Deletar item", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
+				System.out.println(escolha);
+				if(escolha == 0) {
+					// >> CRUD DELETE
+				}
+			}
+		});
+		DELETAR_BTN.setBounds(10, 149, 89, 23);
+		contentPane.add(DELETAR_BTN);
 		
 		
 		// Config dos Labels
