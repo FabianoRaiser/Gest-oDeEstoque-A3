@@ -10,6 +10,8 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class estoque {
 
@@ -90,15 +92,15 @@ public class estoque {
 		frameEstoque.getContentPane().add(pecaLabel);
 		
 		modeloLabel = new JLabel("MODELO:");
-		modeloLabel.setBounds(294, 31, 46, 14);
+		modeloLabel.setBounds(314, 31, 62, 14);
 		frameEstoque.getContentPane().add(modeloLabel);
 		
 		anoLabel = new JLabel("ANO:");
-		anoLabel.setBounds(294, 59, 46, 14);
+		anoLabel.setBounds(314, 59, 46, 14);
 		frameEstoque.getContentPane().add(anoLabel);
 		
 		marcaLabel = new JLabel("MARCA:");
-		marcaLabel.setBounds(153, 31, 46, 14);
+		marcaLabel.setBounds(153, 31, 56, 14);
 		frameEstoque.getContentPane().add(marcaLabel);
 		
 		// CONFIG DOS INPUTS
@@ -110,17 +112,17 @@ public class estoque {
 		
 		PECA_INPUT = new JTextField();
 		PECA_INPUT.setColumns(10);
-		PECA_INPUT.setBounds(57, 56, 227, 20);
+		PECA_INPUT.setBounds(57, 56, 238, 20);
 		frameEstoque.getContentPane().add(PECA_INPUT);
 				
 		MARCA_INPUT = new JTextField();
 		MARCA_INPUT.setColumns(10);
-		MARCA_INPUT.setBounds(198, 28, 86, 20);
+		MARCA_INPUT.setBounds(209, 28, 86, 20);
 		frameEstoque.getContentPane().add(MARCA_INPUT);
 		
 		MODELO_INPUT = new JTextField();
 		MODELO_INPUT.setColumns(10);
-		MODELO_INPUT.setBounds(350, 28, 86, 20);
+		MODELO_INPUT.setBounds(386, 28, 86, 20);
 		frameEstoque.getContentPane().add(MODELO_INPUT);
 		
 		
@@ -129,11 +131,31 @@ public class estoque {
 		JComboBox<Object> ANO_DROPDOWN = new JComboBox<Object>();
 		ANO_DROPDOWN.setModel(new DefaultComboBoxModel<Object>(new String[] {"", "2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008", "2007", "2006", "2005", "2004", "2003", "2002", "2001", "2000", "1999", "1998", "1997", "1996", "1995", "1994", "1993", "1992", "1991", "1990", "1989", "1988", "1987", "1986", "1985", "1984", "1983", "1982"}));
 		ANO_DROPDOWN.setEditable(true);
-		ANO_DROPDOWN.setBounds(350, 55, 86, 22);
+		ANO_DROPDOWN.setBounds(386, 55, 86, 22);
 		frameEstoque.getContentPane().add(ANO_DROPDOWN);
 		
 		JButton PESQUISAR_BTN = new JButton("PESQUISAR");
 		PESQUISAR_BTN.setBounds(10, 87, 112, 23);
 		frameEstoque.getContentPane().add(PESQUISAR_BTN);
+		
+		JButton CADASTRAR_BTN = new JButton("CADASTRAR");
+		CADASTRAR_BTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CadastroPeca cadastro = new CadastroPeca();
+				cadastro.setVisible(true);
+			}
+		});
+		CADASTRAR_BTN.setBounds(529, 27, 112, 23);
+		frameEstoque.getContentPane().add(CADASTRAR_BTN);
+		
+		JButton CADASTRAR_BTN_1 = new JButton("EDITAR");
+		CADASTRAR_BTN_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame editar = new EditarPeca();
+				editar.setVisible(true);
+			}
+		});
+		CADASTRAR_BTN_1.setBounds(529, 55, 112, 23);
+		frameEstoque.getContentPane().add(CADASTRAR_BTN_1);
 	}
 }
