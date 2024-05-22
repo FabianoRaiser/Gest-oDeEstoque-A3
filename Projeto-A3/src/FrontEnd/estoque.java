@@ -7,6 +7,7 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -78,7 +79,15 @@ public class estoque {
 		scrollPane.setBounds(10, 121, 631, 319);
 		frameEstoque.getContentPane().add(scrollPane);
 		
-		tableEstoque = new JTable(data, colunas);
+		@SuppressWarnings("serial")
+		DefaultTableModel model = new DefaultTableModel(data, colunas) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Torna todas as células não editáveis
+            }
+        };
+		
+		tableEstoque = new JTable(model);
 		scrollPane.setViewportView(tableEstoque);
 		
 		// CONFIG DOS LABELS
