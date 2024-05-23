@@ -4,6 +4,9 @@ package FrontEnd;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Conector.Crud_peca;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -77,6 +80,10 @@ public class CadastroPeca extends JFrame {
 				ValidaDados();
 				
 				// >> CRUD INSERT
+				
+				Crud_peca Inserir_peca = new Crud_peca();
+				Inserir_peca.Inserir(NOME_INPUT.getText(),Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(),Integer.parseInt(ANO_INPUT.getText()),COR_INPUT.getText(),Double.parseDouble(VALOR_INPUT.getText()));
+				
 				
 				//JOptionPane.showMessageDialog(null, "Peça cadastrada!");
 			}
