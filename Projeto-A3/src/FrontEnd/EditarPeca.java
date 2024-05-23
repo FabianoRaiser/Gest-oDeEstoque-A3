@@ -4,6 +4,9 @@ package FrontEnd;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+//import Conector.Crud_peca;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -76,6 +79,9 @@ public class EditarPeca extends JFrame {
 				ValidaDados();
 				
 				// >> CRUD UPDATE
+				//Crud_peca updt_peca = new Crud_peca();
+				//updt_peca.Alterar(Integer.parseInt().getText(),Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(),Integer.parseInt(ANO_INPUT.getText()),COR_INPUT.getText(),Double.parseDouble(VALOR_INPUT.getText()));
+				//Adicionar a variavel da caixa "IdPeca" usando .getText dentro do "parseInt
 				
 				//JOptionPane.showMessageDialog(null, "Peça cadastrada!");
 			}
@@ -99,6 +105,9 @@ public class EditarPeca extends JFrame {
 				System.out.println(escolha);
 				if(escolha == 0) {
 					// >> CRUD DELETE
+					//Crud_peca Deletar_peca = new Crud_peca();
+					//Deletar_peca.Deletar(Integer.parseInt()); //Adicionar a variavel da caixa "IdPeca" usando .getText dentro do "parseInt
+							
 				}
 			}
 		});
