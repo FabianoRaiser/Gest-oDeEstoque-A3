@@ -29,32 +29,42 @@ public class CadastroPeca extends JFrame {
 	private JTextField COR_INPUT;
 	private JTextField VALOR_INPUT;
 
-	private void ValidaDados() {
-		System.out.println(NOME_INPUT.getText().isEmpty());
+	private boolean ValidaDados() {
+		boolean validado = true;
 			if(NOME_INPUT.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "O CAMPO NOME NÃO PODE ESTÁ VAZIO!");
+				validado = false;
 			}
 			if(PESO_INPUT.getText().isEmpty() ) {
 				JOptionPane.showMessageDialog(null, "O CAMPO PESO NÃO PODE ESTÁ VAZIO!");
+				validado = false;
 			}
 			if(MEDIDA_INPUT.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "O CAMPO MEDIDA NÃO PODE ESTÁ VAZIO!");
+				validado = false;
 			}
 			if(MARCA_INPUT.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "O CAMPO MARCA NÃO PODE ESTÁ VAZIO!");
+				validado = false;
 			}
 			if(MODELO_INPUT.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "O CAMPO MODELO NÃO PODE ESTÁ VAZIO!");
+				validado = false;
 			}
 			if(ANO_INPUT.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "O CAMPO ANO NÃO PODE ESTÁ VAZIO!");
+				validado = false;
 			}
 			if(COR_INPUT.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "O CAMPO COR NÃO PODE ESTÁ VAZIO!");
+				validado = false;
 			}
 			if(VALOR_INPUT.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "O CAMPO VALOR NÃO PODE ESTÁ VAZIO!");
+				validado = false;
 			}
+		
+		return validado;
 	}
 
 	/**
@@ -77,15 +87,15 @@ public class CadastroPeca extends JFrame {
 		JButton SALVAR_BTN = new JButton("SALVAR");
 		SALVAR_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ValidaDados();
-				
-				// >> CRUD INSERT
-				
-				Crud_peca Inserir_peca = new Crud_peca();
-				Inserir_peca.Inserir(NOME_INPUT.getText(),Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(),Integer.parseInt(ANO_INPUT.getText()),COR_INPUT.getText(),Double.parseDouble(VALOR_INPUT.getText()));
-				
-				
-				//JOptionPane.showMessageDialog(null, "Peça cadastrada!");
+				if(ValidaDados()) 
+				{
+					// >> CRUD INSERT
+					Crud_peca Inserir_peca = new Crud_peca();
+					Inserir_peca.Inserir(NOME_INPUT.getText(),Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(),Integer.parseInt(ANO_INPUT.getText()),COR_INPUT.getText(),Double.parseDouble(VALOR_INPUT.getText()));
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "Peça NÃO registrada", "Erro!" , JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		SALVAR_BTN.setBounds(239, 149, 110, 23);
@@ -149,8 +159,16 @@ public class CadastroPeca extends JFrame {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!Character.isDigit(c)) {
+                if (!Character.isDigit(c) && c != '.') {
                     e.consume(); // Ignora caracteres não numéricos
+                } else if (c == '.') {
+                	JTextField source = (JTextField)e.getSource();
+                    String text = source.getText();
+
+                    // Se já houver um ponto no texto, não permite um novo ponto
+                    if (text.contains(".")) {
+                        e.consume();
+                    }
                 }
             }
 			@Override
@@ -213,8 +231,16 @@ public class CadastroPeca extends JFrame {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!Character.isDigit(c)) {
+                if (!Character.isDigit(c) && c != '.') {
                     e.consume(); // Ignora caracteres não numéricos
+                } else if (c == '.') {
+                	JTextField source = (JTextField)e.getSource();
+                    String text = source.getText();
+
+                    // Se já houver um ponto no texto, não permite um novo ponto
+                    if (text.contains(".")) {
+                        e.consume();
+                    }
                 }
             }
 			@Override

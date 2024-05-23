@@ -8,10 +8,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import Conector.Crud_peca;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class estoque {
@@ -64,28 +69,44 @@ public class estoque {
 		frameEstoque.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameEstoque.getContentPane().setLayout(null);
 		
+		
 		// DATA DA TABELA
 		
-		String[][] data = {
-				{"001", "Motor", "2", "150.0", "kg", "Toyota", "V6", "2022", "Preto", "2500.0"},
-                {"002", "Transmissão", "1", "80.0", "kg", "Honda", "Automatic", "2023", "Prata", "1800.0"},
-                {"003", "Pneu", "4", "10.0", "kg", "Michelin", "Sport", "2024", "Preto", "300.0"}
+		Crud_peca dataServer = new Crud_peca();
+		ResultSet dataTabela = dataServer.Selecionar();
+		@SuppressWarnings("serial")
+		DefaultTableModel model = new DefaultTableModel() {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false; // Torna todas as células não editáveis
+			}
 		};
+		model.addColumn("CÓD");
+		model.addColumn("PEÇA");
+		model.addColumn("QTD");
+		model.addColumn("PESO");
+		model.addColumn("MEDIDA");
+		model.addColumn("MARCA");
+		model.addColumn("MODELO");
+		model.addColumn("ANO");
+		model.addColumn("COR");
+		model.addColumn("VALOR");
 		
-		String[] colunas = {"CÓD", "PEÇA", "QTD", "PESO", "MEDIDA", "MARCA", "MODELO", "ANO", "COR", "VALOR"};
+		try {
+				while(dataTabela.next()) {
+					model.addRow(new Object[] {dataTabela.getInt("IdPeca"), dataTabela.getString("Nome"), dataTabela.getDouble("Quantidade"), dataTabela.getDouble("Peso"),dataTabela.getString("Medida"), dataTabela.getString("Marca"), dataTabela.getString("Modelo"), dataTabela.getInt("Ano"), dataTabela.getString("Cor"), dataTabela.getDouble("Valor")});
+				}
+		} catch (SQLException e) {
+					e.printStackTrace();
+		}
+		
+		
 		
 		// CONFIG DA TABELA
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 121, 631, 319);
 		frameEstoque.getContentPane().add(scrollPane);
 		
-		@SuppressWarnings("serial")
-		DefaultTableModel model = new DefaultTableModel(data, colunas) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Torna todas as células não editáveis
-            }
-        };
 		
 		tableEstoque = new JTable(model);
 		scrollPane.setViewportView(tableEstoque);
@@ -157,14 +178,14 @@ public class estoque {
 		CADASTRAR_BTN.setBounds(529, 27, 112, 23);
 		frameEstoque.getContentPane().add(CADASTRAR_BTN);
 		
-		JButton CADASTRAR_BTN_1 = new JButton("EDITAR");
-		CADASTRAR_BTN_1.addActionListener(new ActionListener() {
+		JButton EDITAR_BTN = new JButton("EDITAR");
+		EDITAR_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame editar = new EditarPeca();
 				editar.setVisible(true);
 			}
 		});
-		CADASTRAR_BTN_1.setBounds(529, 55, 112, 23);
-		frameEstoque.getContentPane().add(CADASTRAR_BTN_1);
+		EDITAR_BTN.setBounds(529, 55, 112, 23);
+		frameEstoque.getContentPane().add(EDITAR_BTN);
 	}
 }
