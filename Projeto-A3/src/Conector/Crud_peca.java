@@ -46,7 +46,7 @@ package Conector;
 			}
 		}
 		
-		public void Alterar(int IdPeca, String Nome, double Quantidade,double Peso, String Medida, String Marca, String Modelo, int Ano, String Cor, double Valor)
+		public void Alterar(int IdPeca, String Nome, double Peso, String Medida, String Marca, String Modelo, int Ano, String Cor, double Valor)
 		{
 			Connection conexao = null;
 			PreparedStatement comando = null;
@@ -54,19 +54,18 @@ package Conector;
 			
 			try {
 				conexao = ClasseConexao.Conectar();
-				String sql = "UPDATE peca SET Nome=?,Quantidade=?,Peso=?,Medida=?,Marca=?,Modelo=?,Ano=?,Cor=?,Valor=? WHERE IdPeca=?";
+				String sql = "UPDATE peca SET Nome=?,Peso=?,Medida=?,Marca=?,Modelo=?,Ano=?,Cor=?,Valor=? WHERE IdPeca=?";
 				
 				comando = conexao.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 				comando.setString(1,Nome);
-				comando.setDouble(2,Quantidade);
-				comando.setDouble(3,Peso);
-				comando.setString(4,Medida);
-				comando.setString(5,Marca);
-				comando.setString(6,Modelo);
-				comando.setInt(7,Ano);
-				comando.setString(8,Cor);
-				comando.setDouble(9,Valor);
-				comando.setInt(10,IdPeca);
+				comando.setDouble(2,Peso);
+				comando.setString(3,Medida);
+				comando.setString(4,Marca);
+				comando.setString(5,Modelo);
+				comando.setInt(6,Ano);
+				comando.setString(7,Cor);
+				comando.setDouble(8,Valor);
+				comando.setInt(19,IdPeca);
 				
 				if(comando.executeUpdate()>0) {
 					

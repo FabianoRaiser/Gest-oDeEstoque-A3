@@ -5,6 +5,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Conector.Crud_peca;
+
 //import Conector.Crud_peca;
 
 import javax.swing.JButton;
@@ -20,6 +22,7 @@ public class EditarPeca extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private JTextField COD_INPUT;
 	private JTextField NOME_INPUT;
 	private JTextField PESO_INPUT;
 	private JTextField MEDIDA_INPUT;
@@ -63,7 +66,7 @@ public class EditarPeca extends JFrame {
 		
 		// Config da janela
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 500, 224);
+		setBounds(100, 100, 500, 237);
 		setTitle("Editar Peça");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -79,14 +82,14 @@ public class EditarPeca extends JFrame {
 				ValidaDados();
 				
 				// >> CRUD UPDATE
-				//Crud_peca updt_peca = new Crud_peca();
-				//updt_peca.Alterar(Integer.parseInt().getText(),Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(),Integer.parseInt(ANO_INPUT.getText()),COR_INPUT.getText(),Double.parseDouble(VALOR_INPUT.getText()));
+				Crud_peca updt_peca = new Crud_peca();
+				updt_peca.Alterar(Integer.parseInt(COD_INPUT.getText()), NOME_INPUT.getText(), Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(), Integer.parseInt(ANO_INPUT.getText()), COR_INPUT.getText(), Double.parseDouble(VALOR_INPUT.getText()));
 				//Adicionar a variavel da caixa "IdPeca" usando .getText dentro do "parseInt
 				
 				//JOptionPane.showMessageDialog(null, "Peça cadastrada!");
 			}
 		});
-		SALVAR_BTN.setBounds(239, 149, 110, 23);
+		SALVAR_BTN.setBounds(239, 168, 110, 23);
 		contentPane.add(SALVAR_BTN);
 		
 		JButton CANCELAR_BTN = new JButton("CANCELAR");
@@ -95,7 +98,7 @@ public class EditarPeca extends JFrame {
 				dispose();
 			}
 		});
-		CANCELAR_BTN.setBounds(359, 149, 110, 23);
+		CANCELAR_BTN.setBounds(359, 168, 110, 23);
 		contentPane.add(CANCELAR_BTN);
 		
 		JButton DELETAR_BTN = new JButton("DELETAR");
@@ -105,66 +108,100 @@ public class EditarPeca extends JFrame {
 				System.out.println(escolha);
 				if(escolha == 0) {
 					// >> CRUD DELETE
-					//Crud_peca Deletar_peca = new Crud_peca();
-					//Deletar_peca.Deletar(Integer.parseInt()); //Adicionar a variavel da caixa "IdPeca" usando .getText dentro do "parseInt
+					Crud_peca Deletar_peca = new Crud_peca();
+					Deletar_peca.Deletar(Integer.parseInt(COD_INPUT.getText())); //Adicionar a variavel da caixa "IdPeca" usando .getText dentro do "parseInt
 							
 				}
 			}
 		});
-		DELETAR_BTN.setBounds(10, 149, 89, 23);
+		DELETAR_BTN.setBounds(10, 168, 89, 23);
 		contentPane.add(DELETAR_BTN);
 		
 		
 		// Config dos Labels
+		JLabel codLabel = new JLabel("CÓD:");
+		codLabel.setBounds(10, 16, 36, 14);
+		contentPane.add(codLabel);
+		
 		JLabel nomeLabel = new JLabel("NOME:");
-		nomeLabel.setBounds(10, 22, 46, 14);
+		nomeLabel.setBounds(10, 41, 46, 14);
 		contentPane.add(nomeLabel);
 		
 		JLabel pesoLabel = new JLabel("PESO:");
-		pesoLabel.setBounds(10, 50, 46, 14);
+		pesoLabel.setBounds(10, 69, 46, 14);
 		contentPane.add(pesoLabel);
 		
 		JLabel medidaLabel = new JLabel("MEDIDA:");
-		medidaLabel.setBounds(106, 50, 58, 14);
+		medidaLabel.setBounds(106, 69, 58, 14);
 		contentPane.add(medidaLabel);
 		
 		JLabel marcaLabel = new JLabel("MARCA:");
-		marcaLabel.setBounds(263, 50, 46, 14);
+		marcaLabel.setBounds(263, 69, 46, 14);
 		contentPane.add(marcaLabel);
 		
 		JLabel modeloLabel = new JLabel("MODELO:");
-		modeloLabel.setBounds(10, 78, 67, 14);
+		modeloLabel.setBounds(10, 97, 67, 14);
 		contentPane.add(modeloLabel);
 		
 		JLabel corLabel = new JLabel("COR:");
-		corLabel.setBounds(368, 78, 46, 14);
+		corLabel.setBounds(368, 97, 46, 14);
 		contentPane.add(corLabel);
 		
 		JLabel anoLabel = new JLabel("ANO:");
-		anoLabel.setBounds(263, 79, 36, 14);
+		anoLabel.setBounds(263, 98, 36, 14);
 		contentPane.add(anoLabel);
 		
 		JLabel valorLabel = new JLabel("VALOR:");
-		valorLabel.setBounds(10, 113, 46, 14);
+		valorLabel.setBounds(10, 132, 46, 14);
 		contentPane.add(valorLabel);
 		
 		// Config dos Inputs
 		
+		COD_INPUT = new JTextField();
+		COD_INPUT.setBounds(50, 13, 94, 20);
+		contentPane.add(COD_INPUT);
+		COD_INPUT.setColumns(10);
+		COD_INPUT.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!Character.isDigit(c)) {
+					e.consume(); // Ignora caracteres não numéricos
+				}
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				// NÃO UTILIZADO
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// NÃO UTILIZADO
+			}
+		});
+		
 		NOME_INPUT = new JTextField();
-		NOME_INPUT.setBounds(50, 19, 419, 20);
+		NOME_INPUT.setBounds(50, 38, 419, 20);
 		contentPane.add(NOME_INPUT);
 		NOME_INPUT.setColumns(10);
 		
 		PESO_INPUT = new JTextField();
-		PESO_INPUT.setBounds(50, 47, 46, 20);
+		PESO_INPUT.setBounds(50, 66, 46, 20);
 		contentPane.add(PESO_INPUT);
 		PESO_INPUT.setColumns(10);
 		PESO_INPUT.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
                 char c = e.getKeyChar();
-                if (!Character.isDigit(c)) {
+                if (!Character.isDigit(c)&& c != '.') {
                     e.consume(); // Ignora caracteres não numéricos
+                } else if (c == '.') {
+                	JTextField source = (JTextField)e.getSource();
+                    String text = source.getText();
+
+                    // Se já houver um ponto no texto, não permite um novo ponto
+                    if (text.contains(".")) {
+                        e.consume();
+                    }
                 }
             }
 			@Override
@@ -179,22 +216,22 @@ public class EditarPeca extends JFrame {
 		
 		MEDIDA_INPUT = new JTextField();
 		MEDIDA_INPUT.setColumns(10);
-		MEDIDA_INPUT.setBounds(174, 47, 67, 20);
+		MEDIDA_INPUT.setBounds(174, 66, 67, 20);
 		contentPane.add(MEDIDA_INPUT);
 		
 		MARCA_INPUT = new JTextField();
 		MARCA_INPUT.setColumns(10);
-		MARCA_INPUT.setBounds(319, 47, 150, 20);
+		MARCA_INPUT.setBounds(319, 66, 150, 20);
 		contentPane.add(MARCA_INPUT);
 		
 		MODELO_INPUT = new JTextField();
 		MODELO_INPUT.setColumns(10);
-		MODELO_INPUT.setBounds(87, 75, 154, 20);
+		MODELO_INPUT.setBounds(87, 94, 154, 20);
 		contentPane.add(MODELO_INPUT);
 		
 		ANO_INPUT = new JTextField();
 		ANO_INPUT.setColumns(10);
-		ANO_INPUT.setBounds(298, 75, 60, 20);
+		ANO_INPUT.setBounds(298, 94, 60, 20);
 		contentPane.add(ANO_INPUT);
 		ANO_INPUT.addKeyListener(new KeyListener() {
             @Override
@@ -216,21 +253,29 @@ public class EditarPeca extends JFrame {
 		
 		COR_INPUT = new JTextField();
 		COR_INPUT.setColumns(10);
-		COR_INPUT.setBounds(401, 75, 68, 20);
+		COR_INPUT.setBounds(401, 94, 68, 20);
 		contentPane.add(COR_INPUT);
 		
 		VALOR_INPUT = new JTextField();
 		VALOR_INPUT.setColumns(10);
-		VALOR_INPUT.setBounds(55, 110, 89, 20);
+		VALOR_INPUT.setBounds(55, 129, 89, 20);
 		contentPane.add(VALOR_INPUT);
 		VALOR_INPUT.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                char c = e.getKeyChar();
-                if (!Character.isDigit(c)) {
-                    e.consume(); // Ignora caracteres não numéricos
-                }
-            }
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!Character.isDigit(c) && c != '.') {
+					e.consume(); // Ignora caracteres não numéricos
+				} else if (c == '.') {
+					JTextField source = (JTextField)e.getSource();
+					String text = source.getText();
+					
+					// Se já houver um ponto no texto, não permite um novo ponto
+					if (text.contains(".")) {
+						e.consume();
+					}
+				}
+			}
 			@Override
 			public void keyPressed(KeyEvent e) {
 				// NÃO UTILIZADO
