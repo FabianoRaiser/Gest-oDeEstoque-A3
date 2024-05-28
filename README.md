@@ -40,10 +40,10 @@ Antes de executar o sistema, certifique-se de ter o seguintes recursos instalado
 <!-- prettier-ignore -->
 |Nome  | Atuação |
 |-|-|
-|Fabiano Raiser | Documentação, Front-end|
+|Fabiano Raiser | Documentação, Front-end |
 |Isabella Corrêa | Banco de Dados |
-|Guilherme Borges | |
-| César Matias | |
+|Guilherme Borges | Back-end |
+| César Duarte | Testes e QA | 
 
 ## Descrição do cenário
 
