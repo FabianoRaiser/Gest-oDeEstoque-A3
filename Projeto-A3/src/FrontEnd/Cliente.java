@@ -1,15 +1,22 @@
 package FrontEnd;
 
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
+
+import Conector.Crud_cliente;
+import net.proteanit.sql.DbUtils;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class Cliente {
@@ -44,6 +51,23 @@ public class Cliente {
 	public Cliente() {
 		initialize();
 	}
+	
+	Crud_cliente dataServer = new Crud_cliente();
+	
+	private void AtualizaTabela(JTable table) {
+		ResultSet resultado = dataServer.Selecionar();
+		try {
+			while(resultado.next()) {
+				// DATA para COMBOBOX
+				//System.out.println(resultado.getString("nome"));
+			}
+			resultado.beforeFirst();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		table.setModel(DbUtils.resultSetToTableModel(resultado));
+	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -51,32 +75,27 @@ public class Cliente {
 	private void initialize() {
 		
 		frameCliente = new JFrame();
+		try {
+			String estIconPath = "src/FrontEnd/images/cli-icon.png";
+			Image estIcon = Toolkit.getDefaultToolkit().getImage(estIconPath);
+			frameCliente.setIconImage(estIcon);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		frameCliente.setTitle("Cliente");
 		frameCliente.setBounds(100, 100, 560, 464);
 		frameCliente.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameCliente.getContentPane().setLayout(null);
 		
-		String[][] data = {
-				{"001", "Maria Silva", "(11) 1234-5678", "Rua A, 123"},
-				{"002", "João Santos", "(21) 9876-5432", "Avenida B, 456"},
-				{"003", "Ana Pereira", "(31) 5555-1234", "Praça C, 789"},
-		};
 		
-		String[] colunas = {"CÓD", "NOME", "TELEFONE", "ENDEREÇO"};
 		
-		@SuppressWarnings("serial")
-		DefaultTableModel model = new DefaultTableModel(data, colunas) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Torna todas as células não editáveis
-            }
-        };
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 108, 524, 306);
 		frameCliente.getContentPane().add(scrollPane);
 		
-		tableCliente = new JTable(model);
+		tableCliente = new JTable();
+		AtualizaTabela(tableCliente);
 		tableCliente.setColumnSelectionAllowed(true);
 		scrollPane.setViewportView(tableCliente);
 		
@@ -101,8 +120,7 @@ public class Cliente {
 		JButton PESQUISAR_BTN = new JButton("PESQUISAR");
 		PESQUISAR_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				// >> CRUD SELECT
+				AtualizaTabela(tableCliente);
 			}
 		});
 		PESQUISAR_BTN.setBounds(10, 74, 110, 23);
@@ -119,6 +137,12 @@ public class Cliente {
 		frameCliente.getContentPane().add(CADASTRAR_BTN);
 		
 		EDITAR_BTN = new JButton("EDITAR");
+		EDITAR_BTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EditarCliente editar = new EditarCliente();
+				editar.setVisible(true);
+			}
+		});
 		EDITAR_BTN.setBounds(424, 49, 110, 23);
 		frameCliente.getContentPane().add(EDITAR_BTN);
 	}
