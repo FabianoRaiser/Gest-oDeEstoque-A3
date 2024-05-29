@@ -1,15 +1,17 @@
 package FrontEnd;
 
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
 
 import Conector.Crud_peca;
+import net.proteanit.sql.DbUtils;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -34,6 +36,8 @@ public class estoque {
 	private JLabel marcaLabel;
 	private JLabel modeloLabel;
 	private JLabel anoLabel;
+	
+	
 
 	/**
 	 * Launch the application.
@@ -50,6 +54,25 @@ public class estoque {
 			}
 		});
 	}
+	
+	Crud_peca dataServer = new Crud_peca();
+	ResultSet dataTabela;
+	
+	
+	private void AtualizaTabela(JTable table) {
+		ResultSet resultado = dataServer.Selecionar();
+		try {
+			while(resultado.next()) {
+				// DATA para COMBOBOX
+				//System.out.println(resultado.getString("nome"));
+			}
+			resultado.beforeFirst();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		table.setModel(DbUtils.resultSetToTableModel(resultado));
+	}
 
 	/**
 	 * Create the application.
@@ -57,14 +80,24 @@ public class estoque {
 	public estoque() {
 		initialize();
 	}
+	
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		
+		
+		
 		// CONFIG DA JANELA
 		frameEstoque = new JFrame("Estoque");
+		try {
+			String estIconPath = "src/FrontEnd/images/box_complete_10825.png";
+			Image estIcon = Toolkit.getDefaultToolkit().getImage(estIconPath);
+			frameEstoque.setIconImage(estIcon);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 		frameEstoque.setBounds(100, 100, 667, 512);
 		frameEstoque.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameEstoque.getContentPane().setLayout(null);
@@ -72,43 +105,15 @@ public class estoque {
 		
 		// DATA DA TABELA
 		
-		Crud_peca dataServer = new Crud_peca();
-		ResultSet dataTabela = dataServer.Selecionar();
-		@SuppressWarnings("serial")
-		DefaultTableModel model = new DefaultTableModel() {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false; // Torna todas as células não editáveis
-			}
-		};
-		model.addColumn("CÓD");
-		model.addColumn("PEÇA");
-		model.addColumn("QTD");
-		model.addColumn("PESO");
-		model.addColumn("MEDIDA");
-		model.addColumn("MARCA");
-		model.addColumn("MODELO");
-		model.addColumn("ANO");
-		model.addColumn("COR");
-		model.addColumn("VALOR");
-		
-		try {
-				while(dataTabela.next()) {
-					model.addRow(new Object[] {dataTabela.getInt("IdPeca"), dataTabela.getString("Nome"), dataTabela.getDouble("Quantidade"), dataTabela.getDouble("Peso"),dataTabela.getString("Medida"), dataTabela.getString("Marca"), dataTabela.getString("Modelo"), dataTabela.getInt("Ano"), dataTabela.getString("Cor"), dataTabela.getDouble("Valor")});
-				}
-		} catch (SQLException e) {
-					e.printStackTrace();
-		}
-		
 		
 		
 		// CONFIG DA TABELA
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 121, 631, 319);
 		frameEstoque.getContentPane().add(scrollPane);
-		
-		
-		tableEstoque = new JTable(model);
+				
+		tableEstoque = new JTable();
+		AtualizaTabela(tableEstoque);
 		scrollPane.setViewportView(tableEstoque);
 		
 		// CONFIG DOS LABELS
@@ -165,6 +170,11 @@ public class estoque {
 		frameEstoque.getContentPane().add(ANO_DROPDOWN);
 		
 		JButton PESQUISAR_BTN = new JButton("PESQUISAR");
+		PESQUISAR_BTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AtualizaTabela(tableEstoque);
+			}
+		});
 		PESQUISAR_BTN.setBounds(10, 87, 112, 23);
 		frameEstoque.getContentPane().add(PESQUISAR_BTN);
 		

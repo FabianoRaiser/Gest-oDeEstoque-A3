@@ -13,6 +13,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -31,6 +33,8 @@ public class EditarPeca extends JFrame {
 	private JTextField ANO_INPUT;
 	private JTextField COR_INPUT;
 	private JTextField VALOR_INPUT;
+	
+	Crud_peca peca = new Crud_peca();
 
 	private void ValidaDados() {
 //			if(NOME_INPUT.getText().isEmpty()) {
@@ -68,6 +72,9 @@ public class EditarPeca extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 500, 237);
 		setTitle("Editar Peça");
+		String estIconPath = "src/FrontEnd/images/Pencil.png";
+		Image estIcon = Toolkit.getDefaultToolkit().getImage(estIconPath);
+		setIconImage(estIcon);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -82,8 +89,8 @@ public class EditarPeca extends JFrame {
 				ValidaDados();
 				
 				// >> CRUD UPDATE
-				Crud_peca updt_peca = new Crud_peca();
-				updt_peca.Alterar(Integer.parseInt(COD_INPUT.getText()), NOME_INPUT.getText(), Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(), Integer.parseInt(ANO_INPUT.getText()), COR_INPUT.getText(), Double.parseDouble(VALOR_INPUT.getText()));
+				//System.out.println(Integer.parseInt(COD_INPUT.getText()) +"," + NOME_INPUT.getText()+"," + Double.parseDouble(PESO_INPUT.getText())+"," + MEDIDA_INPUT.getText()+"," + MARCA_INPUT.getText()+"," + MODELO_INPUT.getText()+"," + Integer.parseInt(ANO_INPUT.getText())+"," + COR_INPUT.getText()+"," + Double.parseDouble(VALOR_INPUT.getText()));
+				peca.Alterar(Integer.parseInt(COD_INPUT.getText()), NOME_INPUT.getText(), Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(), Integer.parseInt(ANO_INPUT.getText()), COR_INPUT.getText(), Double.parseDouble(VALOR_INPUT.getText()));
 				//Adicionar a variavel da caixa "IdPeca" usando .getText dentro do "parseInt
 				
 				//JOptionPane.showMessageDialog(null, "Peça cadastrada!");
@@ -108,8 +115,7 @@ public class EditarPeca extends JFrame {
 				System.out.println(escolha);
 				if(escolha == 0) {
 					// >> CRUD DELETE
-					Crud_peca Deletar_peca = new Crud_peca();
-					Deletar_peca.Deletar(Integer.parseInt(COD_INPUT.getText())); //Adicionar a variavel da caixa "IdPeca" usando .getText dentro do "parseInt
+					peca.Deletar(Integer.parseInt(COD_INPUT.getText())); //Adicionar a variavel da caixa "IdPeca" usando .getText dentro do "parseInt
 							
 				}
 			}
