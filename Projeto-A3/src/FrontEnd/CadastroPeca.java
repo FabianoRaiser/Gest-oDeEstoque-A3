@@ -96,6 +96,15 @@ public class CadastroPeca extends JFrame {
 				} else {
 					JOptionPane.showMessageDialog(null, "Peça NÃO registrada", "Erro!" , JOptionPane.ERROR_MESSAGE);
 				}
+				
+				NOME_INPUT.setText("");
+				PESO_INPUT.setText("");
+				MEDIDA_INPUT.setText("");
+				MARCA_INPUT.setText("");
+				MODELO_INPUT.setText("");
+				ANO_INPUT.setText("");
+				COR_INPUT.setText("");
+				VALOR_INPUT.setText("");
 			}
 		});
 		SALVAR_BTN.setBounds(239, 149, 110, 23);

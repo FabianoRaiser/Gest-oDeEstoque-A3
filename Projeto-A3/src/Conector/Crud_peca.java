@@ -65,7 +65,7 @@ package Conector;
 				comando.setInt(6,Ano);
 				comando.setString(7,Cor);
 				comando.setDouble(8,Valor);
-				comando.setInt(19,IdPeca);
+				comando.setInt(9,IdPeca);
 				
 				if(comando.executeUpdate()>0) {
 					
