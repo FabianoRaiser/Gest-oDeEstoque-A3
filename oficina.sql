@@ -28,11 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `baixaestoque` (
-  `IdBaixaEstoque` int(11) NOT NULL,
-  `IdPeca` int(11) DEFAULT NULL,
-  `DataHoraSolicitada` datetime DEFAULT NULL,
-  `DataHoraConcluida` datetime DEFAULT NULL,
-  `QuantidadePeca` double DEFAULT NULL
+  `IdBaixaEstoque` INT(11) NOT NULL,
+  `IdPeca` INT(11) DEFAULT NULL,
+  `DataHoraSolicitada` DATETIME DEFAULT NULL,
+  `DataHoraConcluida` DATETIME DEFAULT NULL,
+  `QuantidadePeca` DOUBLE DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -42,23 +42,13 @@ CREATE TABLE `baixaestoque` (
 --
 
 CREATE TABLE `cliente` (
-  `IdCliente` int(11) NOT NULL,
-  `Nome` text DEFAULT NULL,
+  `IdCliente` INT(11) NOT NULL,
+  `Nome` VARCHAR(150) DEFAULT NULL,
   `Telefone` char(11) DEFAULT NULL,
-  `Endereco` text DEFAULT NULL
+  `Endereco` VARCHAR(150) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
-
---
--- Estrutura para tabela `estoque`
---
-
-CREATE TABLE `estoque` (
-  `IdEstoque` int(11) NOT NULL,
-  `IdPeca` int(11) DEFAULT NULL,
-  `QuantidadeDisponivel` double DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -67,10 +57,10 @@ CREATE TABLE `estoque` (
 --
 
 CREATE TABLE `faturamento` (
-  `IdFaturamento` int(11) NOT NULL,
-  `IdOS` int(11) DEFAULT NULL,
-  `ValorServico` double DEFAULT NULL,
-  `ValorPecas` double DEFAULT NULL
+  `IdFaturamento` INT(11) NOT NULL,
+  `IdOS` INT(11) DEFAULT NULL,
+  `ValorServico` DOUBLE DEFAULT NULL,
+  `ValorPecas` DOUBLE DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -80,10 +70,11 @@ CREATE TABLE `faturamento` (
 --
 
 CREATE TABLE `os` (
-  `IdOS` int(11) NOT NULL,
-  `IdCliente` int(11) DEFAULT NULL,
-  `Descricao` text DEFAULT NULL,
-  `StatusOS` varchar(100) DEFAULT NULL
+  `IdOS` INT(11) NOT NULL,
+  `IdCliente` INT(11) DEFAULT NULL,
+  `Descricao` VARCHAR(150) DEFAULT NULL,
+  `StatusOS` VARCHAR(100) DEFAULT NULL,
+  `Pecas` JSON DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -93,16 +84,16 @@ CREATE TABLE `os` (
 --
 
 CREATE TABLE `peca` (
-  `IdPeca` int(11) NOT NULL,
-  `Nome` text DEFAULT NULL,
-  `Quantidade` double DEFAULT NULL,
-  `Peso` double DEFAULT NULL,
-  `Medida` text DEFAULT NULL,
-  `Marca` text DEFAULT NULL,
-  `Modelo` text DEFAULT NULL,
-  `Ano` int(11) DEFAULT NULL,
-  `Cor` text DEFAULT NULL,
-  `Valor` double DEFAULT NULL
+  `IdPeca` INT(11) NOT NULL,
+  `Nome` VARCHAR(150) DEFAULT NULL,
+  `Quantidade` DOUBLE DEFAULT NULL,
+  `Peso` DOUBLE DEFAULT NULL,
+  `Medida` VARCHAR(150) DEFAULT NULL,
+  `Marca` VARCHAR(150) DEFAULT NULL,
+  `Modelo` VARCHAR(150) DEFAULT NULL,
+  `Ano` INT(11) DEFAULT NULL,
+  `Cor` VARCHAR(150) DEFAULT NULL,
+  `Valor` DOUBLE DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -112,10 +103,10 @@ CREATE TABLE `peca` (
 --
 
 CREATE TABLE `pedido` (
-  `IdPedidoCompra` int(11) NOT NULL,
-  `IdPeca` int(11) DEFAULT NULL,
-  `Quantidade` double DEFAULT NULL,
-  `Concluido` tinyint(1) DEFAULT NULL
+  `IdPedidoCompra` INT(11) NOT NULL,
+  `IdPeca` INT(11) DEFAULT NULL,
+  `Quantidade` DOUBLE DEFAULT NULL,
+  `Concluido` tinyINT(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -134,13 +125,6 @@ ALTER TABLE `baixaestoque`
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`IdCliente`);
-
---
--- Índices de tabela `estoque`
---
-ALTER TABLE `estoque`
-  ADD PRIMARY KEY (`IdEstoque`),
-  ADD KEY `IdPeca` (`IdPeca`);
 
 --
 -- Índices de tabela `faturamento`
@@ -177,43 +161,37 @@ ALTER TABLE `pedido`
 -- AUTO_INCREMENT de tabela `baixaestoque`
 --
 ALTER TABLE `baixaestoque`
-  MODIFY `IdBaixaEstoque` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdBaixaEstoque` INT(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `IdCliente` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `estoque`
---
-ALTER TABLE `estoque`
-  MODIFY `IdEstoque` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdCliente` INT(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `faturamento`
 --
 ALTER TABLE `faturamento`
-  MODIFY `IdFaturamento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdFaturamento` INT(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `os`
 --
 ALTER TABLE `os`
-  MODIFY `IdOS` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdOS` INT(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `peca`
 --
 ALTER TABLE `peca`
-  MODIFY `IdPeca` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdPeca` INT(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `IdPedidoCompra` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdPedidoCompra` INT(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restrições para tabelas despejadas
@@ -224,12 +202,6 @@ ALTER TABLE `pedido`
 --
 ALTER TABLE `baixaestoque`
   ADD CONSTRAINT `baixaestoque_ibfk_1` FOREIGN KEY (`IdPeca`) REFERENCES `peca` (`IdPeca`);
-
---
--- Restrições para tabelas `estoque`
---
-ALTER TABLE `estoque`
-  ADD CONSTRAINT `estoque_ibfk_1` FOREIGN KEY (`IdPeca`) REFERENCES `peca` (`IdPeca`);
 
 --
 -- Restrições para tabelas `faturamento`
