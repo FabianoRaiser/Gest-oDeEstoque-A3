@@ -74,7 +74,7 @@ CREATE TABLE `os` (
   `IdCliente` INT(11) DEFAULT NULL,
   `Descricao` VARCHAR(150) DEFAULT NULL,
   `StatusOS` VARCHAR(100) DEFAULT NULL,
-  `Pecas` JSON DEFAULT NULL,
+  `Pecas` JSON DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
