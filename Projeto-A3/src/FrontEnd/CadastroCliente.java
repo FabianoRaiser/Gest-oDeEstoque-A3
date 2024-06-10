@@ -4,6 +4,9 @@ package FrontEnd;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Conector.Crud_cliente;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -20,7 +23,7 @@ public class CadastroCliente extends JFrame {
 	private JTextField TELEFONE2_INPUT;
 	private JButton SALVAR_BTN;
 	private JButton CANCELAR_BTN;
-
+	Crud_cliente novo_cliente = new Crud_cliente();
 	/**
 	 * Create the frame.
 	 */
@@ -75,6 +78,9 @@ public class CadastroCliente extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				// >> CRUD INSERT
+				novo_cliente.Inserir(NOME_INPUT.getText(), TELEFONE_INPUT.getText(), ENDERECO_INPUT.getText());
+				
+				
 			}
 		});
 		SALVAR_BTN.setBounds(194, 102, 110, 23);
@@ -89,5 +95,6 @@ public class CadastroCliente extends JFrame {
 		CANCELAR_BTN.setBounds(314, 102, 110, 23);
 		contentPane.add(CANCELAR_BTN);
 	}
+	
 
 }
