@@ -110,8 +110,6 @@ package Conector;
 		}
 		
 		
-		
-		
 
 		public void Inserir(String Nome,double Peso, String Medida, String Marca, String Modelo, int Ano, String Cor, double Valor)
 		{
@@ -155,9 +153,8 @@ package Conector;
 					e.printStackTrace();
 				}
 			}
+		}		
 			
-			
-		}
 		
 	}
 

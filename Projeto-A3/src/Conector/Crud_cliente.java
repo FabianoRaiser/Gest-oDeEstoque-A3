@@ -50,6 +50,8 @@ package Conector;
 			}
 		}
 		
+		
+		
 		public void Alterar(int IdCliente, String Nome, String Telefone, String Endereco)	
 		{
 			Connection conexao = null;
@@ -73,7 +75,7 @@ package Conector;
 					
 					
 				}
-				
+	           		
 			} catch (SQLException e) {
 				
 				e.printStackTrace();
@@ -134,6 +136,7 @@ package Conector;
 					resultado = comando.getGeneratedKeys(); // Pega o código gerado
 					if(resultado.next()) {
 						JOptionPane.showMessageDialog(null, "Dados gravados na tabela com o código: " + resultado.getInt(1));
+						
 					}
 					
 				}
@@ -149,10 +152,5 @@ package Conector;
 					e.printStackTrace();
 				}
 			}
-			
-			
 		}
-		
-	}
-
-
+	}	

@@ -93,7 +93,22 @@ public class EditarCliente extends JFrame {
 		JButton SALVAR_BTN = new JButton("SALVAR");
 		SALVAR_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cliente.Alterar(Integer.parseInt(COD_INPUT.getText()), NOME_INPUT.getText(), TELEFONE_INPUT.getText(), TELEFONE_INPUT.getText());
+				
+				Integer.parseInt(COD_INPUT.getText());
+		        if (NOME_INPUT.getText().isEmpty()) {
+				} else {
+					NOME_INPUT.getText();
+				}
+		        if (ENDERECO_INPUT.getText().isEmpty()) {
+				} else {
+					ENDERECO_INPUT.getText();
+				}
+		        if (TELEFONE_INPUT.getText().isEmpty()) {
+				} else {
+					TELEFONE_INPUT.getText();
+				}
+				
+				cliente.Alterar(Integer.parseInt(COD_INPUT.getText()), NOME_INPUT.getText(), TELEFONE_INPUT.getText(), ENDERECO_INPUT.getText());
 			}
 		});
 		SALVAR_BTN.setBounds(193, 114, 110, 23);
@@ -105,9 +120,12 @@ public class EditarCliente extends JFrame {
 				int escolha = JOptionPane.showConfirmDialog(null, "DELETAR ITEM?", "Deletar item", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
 				System.out.println(escolha);
 				if(escolha == 0) {
+					
 					// >> CRUD DELETE
+					
+					
 					Crud_cliente Deletar_cliente = new Crud_cliente();
-					Deletar_cliente.Deletar(Integer.parseInt(COD_INPUT.getText())); //Adicionar a variavel da caixa "IdPeca" usando .getText dentro do "parseInt
+					Deletar_cliente.Deletar(Integer.parseInt(COD_INPUT.getText())); 
 							
 				}
 			}

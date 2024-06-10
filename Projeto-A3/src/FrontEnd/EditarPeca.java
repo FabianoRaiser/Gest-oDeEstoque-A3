@@ -5,6 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Conector.ClasseConexao;
 import Conector.Crud_peca;
 
 //import Conector.Crud_peca;
@@ -13,6 +14,10 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -86,12 +91,12 @@ public class EditarPeca extends JFrame {
 		JButton SALVAR_BTN = new JButton("SALVAR");
 		SALVAR_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ValidaDados();
+			ValidaDados();
 				
 				// >> CRUD UPDATE
-				//System.out.println(Integer.parseInt(COD_INPUT.getText()) +"," + NOME_INPUT.getText()+"," + Double.parseDouble(PESO_INPUT.getText())+"," + MEDIDA_INPUT.getText()+"," + MARCA_INPUT.getText()+"," + MODELO_INPUT.getText()+"," + Integer.parseInt(ANO_INPUT.getText())+"," + COR_INPUT.getText()+"," + Double.parseDouble(VALOR_INPUT.getText()));
+				
 				peca.Alterar(Integer.parseInt(COD_INPUT.getText()), NOME_INPUT.getText(), Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(), Integer.parseInt(ANO_INPUT.getText()), COR_INPUT.getText(), Double.parseDouble(VALOR_INPUT.getText()));
-				//Adicionar a variavel da caixa "IdPeca" usando .getText dentro do "parseInt
+				
 				
 				//JOptionPane.showMessageDialog(null, "Peça cadastrada!");
 			}
@@ -266,6 +271,15 @@ public class EditarPeca extends JFrame {
 		VALOR_INPUT.setColumns(10);
 		VALOR_INPUT.setBounds(55, 129, 89, 20);
 		contentPane.add(VALOR_INPUT);
+		
+		JButton CONSULTAR_BTN = new JButton("CONSULTAR");
+		CONSULTAR_BTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 Consultar(Integer.parseInt(COD_INPUT.getText()));
+			}
+		});
+		CONSULTAR_BTN.setBounds(119, 168, 110, 23);
+		contentPane.add(CONSULTAR_BTN);
 		VALOR_INPUT.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -291,5 +305,49 @@ public class EditarPeca extends JFrame {
 				// NÃO UTILIZADO
 			}
 		});
-	}
+	}	
+
+
+
+private ResultSet Consultar(int IdPeca) {
+    Connection conexao = null;
+    PreparedStatement comando = null;
+    ResultSet resultado = null;
+
+    try {
+        conexao = ClasseConexao.Conectar();
+        String sql = "SELECT * FROM peca WHERE IdPeca=?";
+        comando = conexao.prepareStatement(sql);
+        comando.setInt(1, IdPeca);
+        resultado = comando.executeQuery();
+        if (resultado.next()) {
+        	NOME_INPUT.setText(resultado.getString(2));
+        	PESO_INPUT.setText(resultado.getString(4));
+        	MEDIDA_INPUT.setText(resultado.getString(5));
+        	MARCA_INPUT.setText(resultado.getString(6));
+        	MODELO_INPUT.setText(resultado.getString(7));
+        	ANO_INPUT.setText(resultado.getString(8));
+        	COR_INPUT.setText(resultado.getString(9));
+        	VALOR_INPUT.setText(resultado.getString(10));
+		} else {
+
+		}
+
+        return resultado;
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return null;
+
+    } finally {
+        ClasseConexao.FecharConexao(conexao);
+        try {
+            if (comando != null) {
+                comando.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+  }
 }

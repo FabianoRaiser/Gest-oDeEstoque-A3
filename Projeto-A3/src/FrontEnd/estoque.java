@@ -10,6 +10,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import Conector.ClasseConexao;
 import Conector.Crud_peca;
 import net.proteanit.sql.DbUtils;
 
@@ -17,9 +18,13 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class estoque {
 
@@ -146,6 +151,13 @@ public class estoque {
 		COD_INPUT.setColumns(10);
 		
 		PECA_INPUT = new JTextField();
+		PECA_INPUT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				pesquisar_peca(PECA_INPUT.getText());
+			}
+			
+		});
 		PECA_INPUT.setColumns(10);
 		PECA_INPUT.setBounds(57, 56, 238, 20);
 		frameEstoque.getContentPane().add(PECA_INPUT);
@@ -198,4 +210,41 @@ public class estoque {
 		EDITAR_BTN.setBounds(529, 55, 112, 23);
 		frameEstoque.getContentPane().add(EDITAR_BTN);
 	}
-}
+
+
+// metodo para pesquisas com filtro
+
+private void pesquisar_peca(String Nome) {
+	Connection conexao = null;
+    PreparedStatement comando = null;
+    String sql= "select * from peca where Nome like ?";
+	
+	try {
+		conexao = ClasseConexao.Conectar();
+		comando = conexao.prepareStatement(sql);
+		comando.setString(1, PECA_INPUT.getText() + "%");
+		ResultSet resultado = comando.executeQuery();
+		
+		tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
+		
+	} catch (SQLException e) {
+        e.printStackTrace();
+        return;
+
+    } finally {
+        ClasseConexao.FecharConexao(conexao);
+        try {
+            if (comando != null) {
+                comando.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+  }
+
+	
+	
+  }
+
+
