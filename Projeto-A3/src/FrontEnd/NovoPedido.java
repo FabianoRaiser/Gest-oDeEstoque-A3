@@ -19,6 +19,8 @@ public class NovoPedido extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
+	
+	JanelaUI UI = new JanelaUI();
 
 
 	/**
@@ -68,5 +70,10 @@ public class NovoPedido extends JFrame {
 		});
 		SALVAR_BTN.setBounds(236, 227, 89, 23);
 		contentPane.add(SALVAR_BTN);
+		
+		JButton ADD_BTN = new JButton("");
+		ADD_BTN.setBounds(400, 11, 24, 23);
+		UI.BotaoIcon(ADD_BTN, "add_icon");
+		contentPane.add(ADD_BTN);
 	}
 }
