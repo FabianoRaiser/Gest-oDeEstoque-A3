@@ -139,6 +139,12 @@ public class EditarOS extends JFrame {
 		contentPane.add(CONSULTA_BTN);
 		
 		JButton ADD_PECA_BTN = new JButton("");
+		ADD_PECA_BTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddPeca addPeca = new AddPeca();
+				addPeca.setVisible(true);
+			}
+		});
 		ADD_PECA_BTN.setBounds(416, 205, 24, 23);
 		UI.BotaoIcon(ADD_PECA_BTN, "add_icon");
 		contentPane.add(ADD_PECA_BTN);
