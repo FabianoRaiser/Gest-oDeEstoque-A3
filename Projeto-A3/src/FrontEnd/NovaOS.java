@@ -24,7 +24,7 @@ public class NovaOS extends JFrame {
 	private JTextField MAO_OBRA_INPUT;
 	private JTextField textField_1;
 
-	
+	JanelaUI UI = new JanelaUI();
 
 	/**
 	 * Create the frame.
@@ -116,5 +116,21 @@ public class NovaOS extends JFrame {
 		});
 		SALVAR_INPUT.setBounds(243, 457, 110, 23);
 		contentPane.add(SALVAR_INPUT);
+		
+		JButton ADD_PECA_BTN = new JButton("");
+		ADD_PECA_BTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddPeca addPeca = new AddPeca();
+				addPeca.setVisible(true);
+			}
+		});
+		ADD_PECA_BTN.setBounds(416, 205, 24, 23);
+		UI.BotaoIcon(ADD_PECA_BTN, "add_icon");
+		contentPane.add(ADD_PECA_BTN);
+		
+		JButton DEL_PECA_BTN = new JButton("");
+		DEL_PECA_BTN.setBounds(450, 205, 24, 23);
+		UI.BotaoIcon(DEL_PECA_BTN, "del_icon");
+		contentPane.add(DEL_PECA_BTN);
 	}
 }

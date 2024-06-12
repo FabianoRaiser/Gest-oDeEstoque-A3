@@ -26,7 +26,7 @@ public class EditarOS extends JFrame {
 	private JTextField VALOR_TOTAL_INPUT;
 	private JTextField N_OS_INPUT;
 
-	
+	JanelaUI UI = new JanelaUI();
 
 	/**
 	 * Create the frame.
@@ -49,21 +49,22 @@ public class EditarOS extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel codClienteLabel = new JLabel("CLIENTE:");
-		codClienteLabel.setBounds(10, 13, 73, 14);
+		codClienteLabel.setBounds(10, 13, 52, 14);
 		contentPane.add(codClienteLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(93, 10, 86, 20);
+		textField.setEditable(false);
+		textField.setBounds(61, 10, 86, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 		
 		JLabel cliNomeLabel = new JLabel("NOME:");
-		cliNomeLabel.setBounds(10, 43, 73, 14);
+		cliNomeLabel.setBounds(10, 47, 52, 14);
 		contentPane.add(cliNomeLabel);
 		
 		NOME_INPUT = new JTextField();
 		NOME_INPUT.setEditable(false);
-		NOME_INPUT.setBounds(93, 40, 381, 20);
+		NOME_INPUT.setBounds(62, 43, 412, 20);
 		contentPane.add(NOME_INPUT);
 		NOME_INPUT.setColumns(10);
 		
@@ -84,11 +85,11 @@ public class EditarOS extends JFrame {
 		contentPane.add(tablePecasOS);
 		
 		JLabel valorMaoObraLabel = new JLabel("VALOR MÃO DE OBRA:");
-		valorMaoObraLabel.setBounds(10, 189, 150, 14);
+		valorMaoObraLabel.setBounds(10, 189, 116, 14);
 		contentPane.add(valorMaoObraLabel);
 		
 		MAO_OBRA_INPUT = new JTextField();
-		MAO_OBRA_INPUT.setBounds(160, 186, 86, 20);
+		MAO_OBRA_INPUT.setBounds(131, 186, 86, 20);
 		contentPane.add(MAO_OBRA_INPUT);
 		MAO_OBRA_INPUT.setColumns(10);
 		
@@ -97,7 +98,7 @@ public class EditarOS extends JFrame {
 		contentPane.add(valorTotalLabel);
 		
 		VALOR_TOTAL_INPUT = new JTextField();
-		VALOR_TOTAL_INPUT.setBounds(115, 400, 86, 20);
+		VALOR_TOTAL_INPUT.setBounds(93, 400, 86, 20);
 		contentPane.add(VALOR_TOTAL_INPUT);
 		VALOR_TOTAL_INPUT.setColumns(10);
 		
@@ -107,7 +108,7 @@ public class EditarOS extends JFrame {
 				dispose();
 			}
 		});
-		CANCELAR_BTN.setBounds(364, 457, 110, 23);
+		CANCELAR_BTN.setBounds(381, 457, 93, 23);
 		contentPane.add(CANCELAR_BTN);
 		
 		JButton SALVAR_INPUT = new JButton("SALVAR");
@@ -116,7 +117,7 @@ public class EditarOS extends JFrame {
 				// CRUD SALVAR
 			}
 		});
-		SALVAR_INPUT.setBounds(243, 457, 110, 23);
+		SALVAR_INPUT.setBounds(278, 457, 93, 23);
 		contentPane.add(SALVAR_INPUT);
 		
 		N_OS_INPUT = new JTextField();
@@ -126,11 +127,31 @@ public class EditarOS extends JFrame {
 		
 		JLabel nOSLabel = new JLabel("Nº OS:");
 		nOSLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-		nOSLabel.setBounds(305, 13, 73, 14);
+		nOSLabel.setBounds(342, 13, 36, 14);
 		contentPane.add(nOSLabel);
 		
 		JButton DELETAR_INPUT = new JButton("DELETAR");
-		DELETAR_INPUT.setBounds(10, 457, 110, 23);
+		DELETAR_INPUT.setBounds(10, 457, 93, 23);
 		contentPane.add(DELETAR_INPUT);
+		
+		JButton CONSULTA_BTN = new JButton("CONSULTAR");
+		CONSULTA_BTN.setBounds(239, 9, 93, 23);
+		contentPane.add(CONSULTA_BTN);
+		
+		JButton ADD_PECA_BTN = new JButton("");
+		ADD_PECA_BTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddPeca addPeca = new AddPeca();
+				addPeca.setVisible(true);
+			}
+		});
+		ADD_PECA_BTN.setBounds(416, 205, 24, 23);
+		UI.BotaoIcon(ADD_PECA_BTN, "add_icon");
+		contentPane.add(ADD_PECA_BTN);
+		
+		JButton DEL_PECA_BTN = new JButton("");
+		DEL_PECA_BTN.setBounds(450, 205, 24, 23);
+		UI.BotaoIcon(DEL_PECA_BTN, "del_icon");
+		contentPane.add(DEL_PECA_BTN);
 	}
 }
