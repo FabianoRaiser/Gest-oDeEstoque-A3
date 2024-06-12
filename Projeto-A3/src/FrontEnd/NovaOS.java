@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -36,7 +37,6 @@ public class NovaOS extends JFrame {
 		try {
 			String novaOSIconPath = "src/FrontEnd/images/newOS-icon.png";
 			Image novaOSIcon = Toolkit.getDefaultToolkit().getImage(novaOSIconPath);
-			setIconImage(novaOSIcon);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
