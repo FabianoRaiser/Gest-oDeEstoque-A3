@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
@@ -35,7 +36,6 @@ public class EditarPedido extends JFrame {
 		try {
 			String novoPedidoIconPath = "src/FrontEnd/images/pedidos-icon.png";
 			Image novoPedidoIcon = Toolkit.getDefaultToolkit().getImage(novoPedidoIconPath);
-			setIconImage(novoPedidoIcon);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

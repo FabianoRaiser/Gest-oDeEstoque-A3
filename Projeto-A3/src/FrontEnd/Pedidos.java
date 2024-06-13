@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
@@ -15,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
-public class Pedidos extends JFrame {
+public class Pedidos extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -50,7 +51,6 @@ public class Pedidos extends JFrame {
 		try {
 			String pedidosIconPath = "src/FrontEnd/images/pedidos-icon.png";
 			Image pedidosIcon = Toolkit.getDefaultToolkit().getImage(pedidosIconPath);
-			setIconImage(pedidosIcon);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
