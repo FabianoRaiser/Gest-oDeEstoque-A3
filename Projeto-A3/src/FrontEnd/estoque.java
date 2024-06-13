@@ -145,7 +145,8 @@ public class estoque {
 		
 		// CONFIG DOS INPUTS
 		
-		COD_INPUT = new JTextField();
+		COD_INPUT = new JTextField(); 
+			
 		COD_INPUT.setBounds(57, 28, 86, 20);
 		frameEstoque.getContentPane().add(COD_INPUT);
 		COD_INPUT.setColumns(10);
@@ -154,7 +155,7 @@ public class estoque {
 		PECA_INPUT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				pesquisar_peca(PECA_INPUT.getText());
+				pesquisar_peca(PECA_INPUT.getText());	
 			}
 			
 		});
@@ -163,11 +164,24 @@ public class estoque {
 		frameEstoque.getContentPane().add(PECA_INPUT);
 				
 		MARCA_INPUT = new JTextField();
+		MARCA_INPUT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				pesquisar_marca(MARCA_INPUT.getText());
+				
+			}
+		});
 		MARCA_INPUT.setColumns(10);
 		MARCA_INPUT.setBounds(209, 28, 86, 20);
 		frameEstoque.getContentPane().add(MARCA_INPUT);
 		
 		MODELO_INPUT = new JTextField();
+		MODELO_INPUT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				pesquisar_modelo(MODELO_INPUT.getText());
+			}
+		});
 		MODELO_INPUT.setColumns(10);
 		MODELO_INPUT.setBounds(386, 28, 86, 20);
 		frameEstoque.getContentPane().add(MODELO_INPUT);
@@ -243,8 +257,63 @@ private void pesquisar_peca(String Nome) {
     }
   }
 
+private void pesquisar_modelo(String Modelo) {
+	Connection conexao = null;
+    PreparedStatement comando = null;
+    String sql= "select * from peca where Modelo like ?";
 	
-	
+	try {
+		conexao = ClasseConexao.Conectar();
+		comando = conexao.prepareStatement(sql);
+		comando.setString(1, MODELO_INPUT.getText() + "%");
+		ResultSet resultado = comando.executeQuery();
+		
+		tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
+		
+	} catch (SQLException e) {
+        e.printStackTrace();
+        return;
+
+    } finally {
+        ClasseConexao.FecharConexao(conexao);
+        try {
+            if (comando != null) {
+                comando.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
   }
+	
+private void pesquisar_marca(String Marca) {
+	Connection conexao = null;
+    PreparedStatement comando = null;
+    String sql= "select * from peca where Marca like ?";
+	
+	try {
+		conexao = ClasseConexao.Conectar();
+		comando = conexao.prepareStatement(sql);
+		comando.setString(1, MARCA_INPUT.getText() + "%");
+		ResultSet resultado = comando.executeQuery();
+		
+		tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
+		
+	} catch (SQLException e) {
+        e.printStackTrace();
+        return;
+
+    } finally {
+        ClasseConexao.FecharConexao(conexao);
+        try {
+            if (comando != null) {
+                comando.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+  }
+ }
 
 

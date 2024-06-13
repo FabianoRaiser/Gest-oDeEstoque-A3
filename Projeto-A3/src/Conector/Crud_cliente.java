@@ -71,7 +71,7 @@ package Conector;
 				if(comando.executeUpdate()>0) {
 					
 					
-					System.out.println("Dados alterados com sucesso");
+					JOptionPane.showMessageDialog(null, "Dados alterados com sucesso");
 					
 					
 				}
