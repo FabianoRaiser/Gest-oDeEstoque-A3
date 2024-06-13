@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Conector.ClasseConexao;
 import Conector.Crud_cliente;
 
 import javax.swing.JLabel;
@@ -15,6 +16,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class EditarCliente extends JFrame {
@@ -132,5 +137,50 @@ public class EditarCliente extends JFrame {
 		});
 		DELETAR_BTN.setBounds(10, 114, 110, 23);
 		contentPane.add(DELETAR_BTN);
+		
+		JButton btnNewButton = new JButton("CONSULTAR");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Consultar(Integer.parseInt(COD_INPUT.getText()));
+			}
+		});
+		btnNewButton.setBounds(162, 7, 103, 23);
+		contentPane.add(btnNewButton);
 	}
-}
+	private ResultSet Consultar(int IdCliente) {
+	    Connection conexao = null;
+	    PreparedStatement comando = null;
+	    ResultSet resultado = null;
+
+	    try {
+	        conexao = ClasseConexao.Conectar();
+	        String sql = "SELECT * FROM cliente WHERE IdCliente=?";
+	        comando = conexao.prepareStatement(sql);
+	        comando.setInt(1, IdCliente);
+	        resultado = comando.executeQuery();
+	        if (resultado.next()) {
+	        	NOME_INPUT.setText(resultado.getString(2));
+	        	TELEFONE_INPUT.setText(resultado.getString(3));
+	        	ENDERECO_INPUT.setText(resultado.getString(4));
+			} else {
+
+			}
+
+	        return resultado;
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        return null;
+
+	    } finally {
+	        ClasseConexao.FecharConexao(conexao);
+	        try {
+	            if (comando != null) {
+	                comando.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	  }
+	}

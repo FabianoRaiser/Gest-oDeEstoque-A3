@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
+import Conector.ClasseConexao;
 import Conector.Crud_cliente;
 import net.proteanit.sql.DbUtils;
 
@@ -15,9 +16,13 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Cliente {
 
@@ -113,6 +118,13 @@ public class Cliente {
 		COD_INPUT.setColumns(10);
 		
 		NOME_INPUT = new JTextField();
+		NOME_INPUT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				pesquisar_cliente(NOME_INPUT.getText());
+			}
+			
+		});
 		NOME_INPUT.setColumns(10);
 		NOME_INPUT.setBounds(66, 46, 204, 20);
 		frameCliente.getContentPane().add(NOME_INPUT);
@@ -146,4 +158,35 @@ public class Cliente {
 		EDITAR_BTN.setBounds(424, 49, 110, 23);
 		frameCliente.getContentPane().add(EDITAR_BTN);
 	}
+	
+	// metodo para pesquisas com filtro
+
+	private void pesquisar_cliente(String Nome) {
+		Connection conexao = null;
+	    PreparedStatement comando = null;
+	    String sql= "select * from cliente where Nome like ?";
+		
+		try {
+			conexao = ClasseConexao.Conectar();
+			comando = conexao.prepareStatement(sql);
+			comando.setString(1, NOME_INPUT.getText() + "%");
+			ResultSet resultado = comando.executeQuery();
+			
+			tableCliente.setModel(DbUtils.resultSetToTableModel(resultado)); 
+			
+		} catch (SQLException e) {
+	        e.printStackTrace();
+	        return;
+
+	    } finally {
+	        ClasseConexao.FecharConexao(conexao);
+	        try {
+	            if (comando != null) {
+	                comando.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	  }
 }
