@@ -1,13 +1,7 @@
 package FrontEnd;
 
-import java.awt.EventQueue;
-import java.awt.Image;
-import java.awt.Toolkit;
 
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -16,73 +10,42 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 
-public class Pedidos extends JInternalFrame {
+public class Pedidos extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPane;
 	private JTable tablePedidos;
 	private JTextField N_PEDIDOS_INPUT;
 	private JTextField COD_PECA_INPUT;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Pedidos frame = new Pedidos();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
+	
 	public Pedidos() {
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 650, 423);
-		setTitle("Pedidos de Peças");
-		try {
-			String pedidosIconPath = "src/FrontEnd/images/pedidos-icon.png";
-			Image pedidosIcon = Toolkit.getDefaultToolkit().getImage(pedidosIconPath);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
+		setSize(650, 450);
+		setLayout(null);
+				
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 75, 614, 300);
-		contentPane.add(scrollPane);
+		scrollPane.setBounds(10, 75, 630, 364);
+		add(scrollPane);
 		
 		tablePedidos = new JTable();
 		scrollPane.setViewportView(tablePedidos);
 		
 		JLabel nPedidoLabel = new JLabel("Nº PEDIDO:");
 		nPedidoLabel.setBounds(10, 11, 75, 14);
-		contentPane.add(nPedidoLabel);
+		add(nPedidoLabel);
 		
 		N_PEDIDOS_INPUT = new JTextField();
 		N_PEDIDOS_INPUT.setBounds(84, 8, 114, 20);
-		contentPane.add(N_PEDIDOS_INPUT);
+		add(N_PEDIDOS_INPUT);
 		N_PEDIDOS_INPUT.setColumns(10);
 		
 		JLabel codPecaLabel = new JLabel("Nº PEÇA:");
 		codPecaLabel.setBounds(230, 10, 55, 16);
-		contentPane.add(codPecaLabel);
+		add(codPecaLabel);
 		
 		COD_PECA_INPUT = new JTextField();
 		COD_PECA_INPUT.setBounds(284, 8, 114, 20);
-		contentPane.add(COD_PECA_INPUT);
+		add(COD_PECA_INPUT);
 		COD_PECA_INPUT.setColumns(10);
 		
 		JButton PESQUISAR_BTN = new JButton("PESQUISAR");
@@ -91,7 +54,7 @@ public class Pedidos extends JInternalFrame {
 			}
 		});
 		PESQUISAR_BTN.setBounds(10, 37, 98, 26);
-		contentPane.add(PESQUISAR_BTN);
+		add(PESQUISAR_BTN);
 		
 		JButton CADASTRAR_INPUT = new JButton("CADASTRAR");
 		CADASTRAR_INPUT.addActionListener(new ActionListener() {
@@ -100,15 +63,15 @@ public class Pedidos extends JInternalFrame {
 				novoPedido.setVisible(true);
 			}
 		});
-		CADASTRAR_INPUT.setBounds(526, 7, 98, 23);
-		contentPane.add(CADASTRAR_INPUT);
+		CADASTRAR_INPUT.setBounds(541, 8, 98, 23);
+		add(CADASTRAR_INPUT);
 		
 		JButton EDITAR_BTN = new JButton("EDITAR");
 		EDITAR_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		EDITAR_BTN.setBounds(527, 39, 98, 23);
-		contentPane.add(EDITAR_BTN);
+		EDITAR_BTN.setBounds(542, 40, 98, 23);
+		add(EDITAR_BTN);
 	}
 }
