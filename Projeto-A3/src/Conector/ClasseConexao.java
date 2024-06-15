@@ -13,7 +13,7 @@ public class ClasseConexao {
 			{
 				if(conexao==null)
 				{
-					String url = "jdbc:mysql://localhost/oficina_teste";
+					String url = "jdbc:mysql://localhost/oficina";
 					conexao = DriverManager.getConnection(url,"root","");
 					
 				}
