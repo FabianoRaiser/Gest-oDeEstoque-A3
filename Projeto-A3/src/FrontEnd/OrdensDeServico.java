@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
@@ -17,7 +18,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class OrdensDeServico extends JFrame {
+public class OrdensDeServico extends JInternalFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -52,7 +53,6 @@ public class OrdensDeServico extends JFrame {
 		try {
 			String osIconPath = "src/FrontEnd/images/os-icon.png";
 			Image osIcon = Toolkit.getDefaultToolkit().getImage(osIconPath);
-			setIconImage(osIcon);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -42,7 +43,6 @@ public class EditarCliente extends JFrame {
 		setTitle("Editar Cliente");
 		String estIconPath = "src/FrontEnd/images/Pencil.png";
 		Image estIcon = Toolkit.getDefaultToolkit().getImage(estIconPath);
-		setIconImage(estIcon);
 		setBounds(100, 100, 450, 184);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
