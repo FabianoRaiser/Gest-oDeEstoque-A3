@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import Conector.Crud_cliente;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -25,6 +26,24 @@ public class CadastroCliente extends JFrame {
 	private JButton SALVAR_BTN;
 	private JButton CANCELAR_BTN;
 	Crud_cliente novo_cliente = new Crud_cliente();
+	
+	private boolean ValidaDados() {
+		boolean validado = true;
+			if(NOME_INPUT.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "O CAMPO NOME NÃO PODE ESTÁ VAZIO!");
+				validado = false;
+			}
+			if(TELEFONE_INPUT.getText().isEmpty() ) {
+				JOptionPane.showMessageDialog(null, "O CAMPO TELEFONE NÃO PODE ESTÁ VAZIO!");
+				validado = false;
+			}
+			if(ENDERECO_INPUT.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "O CAMPO ENDEREÇO NÃO PODE ESTÁ VAZIO!");
+				validado = false;
+			}
+		return validado;
+	}
+	
 	/**
 	 * Create the frame.
 	 */
@@ -76,11 +95,17 @@ public class CadastroCliente extends JFrame {
 		
 		SALVAR_BTN = new JButton("SALVAR");
 		SALVAR_BTN.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+public void actionPerformed(ActionEvent e) {
 				
-				// >> CRUD INSERT
-				novo_cliente.Inserir(NOME_INPUT.getText(), TELEFONE_INPUT.getText(), ENDERECO_INPUT.getText());
-				
+				if(ValidaDados()) 
+				{
+					// >> CRUD INSERT
+					novo_cliente.Inserir(NOME_INPUT.getText(), TELEFONE_INPUT.getText(), ENDERECO_INPUT.getText());
+					
+				} else {
+					JOptionPane.showMessageDialog(null, "Cliente NÃO registrado", "Erro!" , JOptionPane.ERROR_MESSAGE);
+					
+				}
 				
 			}
 		});
