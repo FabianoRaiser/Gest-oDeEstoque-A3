@@ -2,13 +2,16 @@ package FrontEnd;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JToolBar;
-import javax.swing.JDesktopPane;
 import javax.swing.JMenuBar;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JMenu;
+import javax.swing.JTabbedPane;
+import javax.swing.KeyStroke;
+
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -16,7 +19,7 @@ import java.awt.event.MouseEvent;
 public class TelaPrincipal {
 
     private JFrame frame;
-    private JDesktopPane painel;
+    private JTabbedPane painel;
 
     /**
      * Launch the application.
@@ -33,66 +36,56 @@ public class TelaPrincipal {
             }
         });
     }
+    
+    private void abrirNovaTela() {
+		TelaPrincipal novaTela = new TelaPrincipal();
+		novaTela.frame.setVisible(true);
+	}
 
     /**
      * Create the application.
      */
     public TelaPrincipal() {
-        initialize();
-    }
-
-    /**
-     * Initialize the contents of the frame.
-     */
-    private void initialize() {
+    
         frame = new JFrame();
-        frame.setBounds(100, 100, 800, 580);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBounds(100, 100, 690, 545);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
         
-        painel = new JDesktopPane();
-        painel.setBounds(10, 33, 764, 497);
+        painel = new JTabbedPane();
+        painel.setBounds(5, 25, 665, 490);
         frame.getContentPane().add(painel);
+        
+        JPanel estoque = new estoque();
+        JPanel pedidos = new Pedidos();
+        JPanel clientes = new Cliente();
+        JPanel ordens	= new OrdensDeServico();
+        
+        painel.addTab("Estoque", estoque);
+        painel.addTab("Pedidos", pedidos);
+        painel.addTab("Clientes", clientes);
+        painel.addTab("Ordens", ordens);
+        
         
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBounds(0, 0, 784, 22);
         frame.getContentPane().add(menuBar);
         
-        JMenu menuPeca = new JMenu("Peças");
-        menuPeca.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		
-        	}
-        });
-        menuBar.add(menuPeca);
+        JMenuItem itemNovaTela = new JMenuItem("Nova Janela");
+        itemNovaTela.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
+        itemNovaTela.addActionListener(e -> abrirNovaTela());
         
         
+        JMenuItem itemSair = new JMenuItem("Sair");
+        itemSair.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, InputEvent.SHIFT_DOWN_MASK));
+        itemSair.addActionListener(e -> frame.dispose());
         
-        JMenu menuCliente = new JMenu("Clientes");
-        menuBar.add(menuCliente);
+        JMenu menu = new JMenu("Menu");
+        menu.add(itemNovaTela);
+        menu.addSeparator();
+        menu.add(itemSair);
         
-        OrdensDeServico telaOS = new OrdensDeServico();
+        menuBar.add(menu);
         
-        JMenu menuOS = new JMenu("OS");
-        menuOS.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		telaOS.setVisible(true);
-        		painel.add(telaOS);
-        	}
-        });
-        menuBar.add(menuOS);
-        
-        Pedidos telaPedido = new Pedidos();
-        
-        JMenu menuPedido = new JMenu("Pedidos");
-        menuPedido.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		telaPedido.setVisible(true);
-        		painel.add(telaPedido);
-        	}
-        });
-        menuBar.add(menuPedido);
     }
 }
