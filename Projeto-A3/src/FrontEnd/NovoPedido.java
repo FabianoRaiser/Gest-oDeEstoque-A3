@@ -66,12 +66,19 @@ public class NovoPedido extends JFrame {
 		JButton SALVAR_BTN = new JButton("SALVAR");
 		SALVAR_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 		});
 		SALVAR_BTN.setBounds(236, 227, 89, 23);
 		contentPane.add(SALVAR_BTN);
 		
 		JButton ADD_BTN = new JButton("");
+		ADD_BTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddPecaPedido add = new AddPecaPedido();
+				add.setVisible(true);
+			}
+		});
 		ADD_BTN.setBounds(400, 11, 24, 23);
 		UI.BotaoIcon(ADD_BTN, "add_icon");
 		contentPane.add(ADD_BTN);

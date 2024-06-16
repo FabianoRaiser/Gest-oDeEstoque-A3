@@ -41,7 +41,6 @@ public class estoque extends JPanel{
 	private JLabel modeloLabel;
 	private JLabel anoLabel;
 	
-	Crud_estoque PESQUISAR = new Crud_estoque();
 	Crud_peca dataServer = new Crud_peca();
 	ResultSet dataTabela;
 	
@@ -117,7 +116,7 @@ public class estoque extends JPanel{
 	            } else {
 	            }
 				
-				PESQUISAR.pesquisar_codigo(Integer.parseInt(COD_INPUT.getText()), tableEstoque);
+				dataServer.pesquisar_codigo(Integer.parseInt(COD_INPUT.getText()), tableEstoque);
 			}
 		});
 		
@@ -125,7 +124,7 @@ public class estoque extends JPanel{
 		PECA_INPUT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				PESQUISAR.pesquisar_peca(PECA_INPUT.getText(), tableEstoque);	
+				dataServer.pesquisar_peca(PECA_INPUT.getText(), tableEstoque);	
 			}
 			
 		});
@@ -137,7 +136,7 @@ public class estoque extends JPanel{
 		MARCA_INPUT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				PESQUISAR.pesquisar_marca(MARCA_INPUT.getText(), tableEstoque);
+				dataServer.pesquisar_marca(MARCA_INPUT.getText(), tableEstoque);
 				
 			}
 		});
@@ -149,7 +148,7 @@ public class estoque extends JPanel{
 		MODELO_INPUT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				PESQUISAR.pesquisar_modelo(MODELO_INPUT.getText(), tableEstoque);
+				dataServer.pesquisar_modelo(MODELO_INPUT.getText(), tableEstoque);
 			}
 		});
 		MODELO_INPUT.setColumns(10);
@@ -166,7 +165,7 @@ public class estoque extends JPanel{
 		add(ANO_DROPDOWN);
 		ANO_DROPDOWN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PESQUISAR.pesquisar_ano(ANO_DROPDOWN, tableEstoque);
+				dataServer.pesquisar_ano(ANO_DROPDOWN, tableEstoque);
 			}
 			});
 		

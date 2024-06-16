@@ -32,25 +32,9 @@ public class Cliente extends JPanel {
 	 * Create the application.
 	 */
 	Crud_cliente dataServer = new Crud_cliente();
-	Crud_cliente PESQUISAR = new Crud_cliente();
-	private void AtualizaTabela(JTable table) {
-		ResultSet resultado = dataServer.Selecionar();
-		try {
-			while(resultado.next()) {
-				// DATA para COMBOBOX
-				//System.out.println(resultado.getString("nome"));
-			}
-			resultado.beforeFirst();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-		table.setModel(DbUtils.resultSetToTableModel(resultado));
-	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	JanelaUI ui = new JanelaUI();
+	ResultSet resultado = dataServer.Selecionar();
+	
 	public Cliente() {
 		
 		setSize(650, 450);
@@ -61,7 +45,7 @@ public class Cliente extends JPanel {
 		add(scrollPane);
 		
 		tableCliente = new JTable();
-		AtualizaTabela(tableCliente);
+		ui.AtualizaTabela(tableCliente, resultado);
 		tableCliente.setColumnSelectionAllowed(true);
 		scrollPane.setViewportView(tableCliente);
 		
@@ -82,10 +66,10 @@ public class Cliente extends JPanel {
 			public void keyReleased(KeyEvent e) {
 				String codigoText = COD_INPUT.getText().trim();
 	            if (codigoText.isEmpty()) {
-	            	AtualizaTabela(tableCliente);
+	            	ui.AtualizaTabela(tableCliente, resultado);
 	            } else {
 	            }
-				PESQUISAR.pesquisar_codigo(Integer.parseInt(COD_INPUT.getText()), tableCliente);
+				dataServer.pesquisar_codigo(Integer.parseInt(COD_INPUT.getText()), tableCliente);
 			}
 		});
 		
@@ -93,7 +77,7 @@ public class Cliente extends JPanel {
 		NOME_INPUT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				PESQUISAR.pesquisar_cliente(NOME_INPUT.getText(),tableCliente);
+				dataServer.pesquisar_cliente(NOME_INPUT.getText(),tableCliente);
 			}
 			
 		});
@@ -104,7 +88,7 @@ public class Cliente extends JPanel {
 		JButton ATUALIZAR_BTN = new JButton("ATUALIZAR");
 		ATUALIZAR_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AtualizaTabela(tableCliente);
+				ui.AtualizaTabela(tableCliente, resultado);
 			}
 		});
 		ATUALIZAR_BTN.setBounds(10, 84, 110, 23);

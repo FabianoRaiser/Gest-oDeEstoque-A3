@@ -159,7 +159,7 @@ package Conector;
 			
 			try {
 				conexao = ClasseConexao.Conectar();
-				String sql = "INSERT INTO os_peca(IdOS,IdPeca,Quantidade) VALUES(?,?,?)";
+				String sql = "INSERT INTO os_peca(IdOS, IdPeca,Quantidade) VALUES(?,?,?)";
 				
 				comando = conexao.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 				comando.setInt(1,IdOS);

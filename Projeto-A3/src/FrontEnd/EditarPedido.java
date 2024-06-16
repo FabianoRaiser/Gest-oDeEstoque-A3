@@ -8,11 +8,17 @@ import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Conector.Crud_pedido;
+
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -24,6 +30,8 @@ public class EditarPedido extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField COD_PEDIDO;
+	
+	Crud_pedido dataServer = new Crud_pedido();
 
 
 	/**
@@ -79,8 +87,19 @@ public class EditarPedido extends JFrame {
 		contentPane.add(codPedidoLabel);
 		
 		COD_PEDIDO = new JTextField();
-		COD_PEDIDO.setEditable(false);
+		COD_PEDIDO.setEditable(true);
 		COD_PEDIDO.setBounds(77, 8, 86, 20);
+		COD_PEDIDO.addKeyListener( new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String codigoText = COD_PEDIDO.getText().trim();
+				if (codigoText.isEmpty()) {
+					// Faz nada kkkk
+				} else {
+					dataServer.pesquisar_codigo(Integer.parseInt(COD_PEDIDO.getText()), table);
+				}
+			}
+		});
 		contentPane.add(COD_PEDIDO);
 		COD_PEDIDO.setColumns(10);
 		
