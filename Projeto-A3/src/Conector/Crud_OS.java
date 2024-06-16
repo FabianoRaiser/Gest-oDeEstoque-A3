@@ -48,7 +48,7 @@ package Conector;
 			}
 		}
 		
-		public void Alterar(String Descricao, String StatusOS, int IdOS )
+		public void Alterar_OS(String Descricao, double ValorServico,double ValorTotal, int IdOS  )
 		{
 			Connection conexao = null;
 			PreparedStatement comando = null;
@@ -56,13 +56,13 @@ package Conector;
 			
 			try {
 				conexao = ClasseConexao.Conectar();
-				String sql = "UPDATE os SET Descricao=?,StatusOS=? WHERE IdOS=?";
+				String sql = "UPDATE os SET Descricao = ?, ValorServico = ?, ValorTotal = ? WHERE IdOS = ?";
 				
 				comando = conexao.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 				comando.setString(1,Descricao);
-				comando.setString(2,StatusOS);
-				comando.setInt(3,IdOS);
-				
+				comando.setDouble(2,ValorServico);
+				comando.setDouble(3,ValorTotal);
+				comando.setInt(4,IdOS);
 				
 				if(comando.executeUpdate()>0) {
 					
@@ -110,7 +110,7 @@ package Conector;
 		
 		
 
-		public void Inserir(int IdCliente, String Descricao, String StatusOS)
+		public void Inserir(int IdCliente, String Descricao, double ValorServico, double ValorTotal)
 		{
 			Connection conexao = null;
 			PreparedStatement comando = null;
@@ -118,19 +118,20 @@ package Conector;
 			
 			try {
 				conexao = ClasseConexao.Conectar();
-				String sql = "INSERT INTO os(IdCliente,Descricao,StatusOS) VALUES(?,?,?)";
+				String sql = "INSERT INTO os(IdCliente,Descricao,ValorServico,ValorTotal) VALUES(?,?,?,?)";
 				
 				comando = conexao.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 				comando.setInt(1,IdCliente);
 				comando.setString(2,Descricao);
-				comando.setString(3,StatusOS);
-				
+				comando.setDouble(3,ValorServico);
+				comando.setDouble(4,ValorTotal);
 				
 				
 				if(comando.executeUpdate()>0) {
 					resultado = comando.getGeneratedKeys(); // Pega o código gerado
 					if(resultado.next()) {
 						JOptionPane.showMessageDialog(null, "Ordem de Serviço Gerado com o numero:  " + resultado.getInt(1));
+						
 					}
 					
 				}
@@ -150,4 +151,41 @@ package Conector;
 			
 		}
 		
+		public void Inserir_peca(int IdOS, int IdPeca, int Quantidade)
+		{
+			Connection conexao = null;
+			PreparedStatement comando = null;
+			ResultSet resultado = null;
+			
+			try {
+				conexao = ClasseConexao.Conectar();
+				String sql = "INSERT INTO os_peca(IdOS,IdPeca,Quantidade) VALUES(?,?,?)";
+				
+				comando = conexao.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+				comando.setInt(1,IdOS);
+				comando.setInt(2,IdPeca);
+				comando.setInt(3,Quantidade);
+				if(comando.executeUpdate()>0) {
+					resultado = comando.getGeneratedKeys(); // Pega o código gerado
+					if(resultado.next()) {
+						JOptionPane.showMessageDialog(null, "PEÇA ADICIONADA COM SUCESSO  ");
+					}
+					
+				}
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}finally {
+				ClasseConexao.FecharConexao(conexao);
+				try {
+					comando.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			
+			
+		}
 	}
+		

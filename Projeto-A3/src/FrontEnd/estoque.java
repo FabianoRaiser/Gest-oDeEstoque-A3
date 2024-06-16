@@ -7,7 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import Conector.ClasseConexao;
+import Conector.Crud_estoque;
 import Conector.Crud_peca;
 import net.proteanit.sql.DbUtils;
 
@@ -15,8 +15,6 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -43,7 +41,7 @@ public class estoque extends JPanel{
 	private JLabel modeloLabel;
 	private JLabel anoLabel;
 	
-
+	Crud_estoque PESQUISAR = new Crud_estoque();
 	Crud_peca dataServer = new Crud_peca();
 	ResultSet dataTabela;
 	
@@ -110,12 +108,24 @@ public class estoque extends JPanel{
 		COD_INPUT.setBounds(57, 12, 86, 20);
 		add(COD_INPUT);
 		COD_INPUT.setColumns(10);
+		COD_INPUT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String codigoText = COD_INPUT.getText().trim();
+	            if (codigoText.isEmpty()) {
+	            	AtualizaTabela(tableEstoque);
+	            } else {
+	            }
+				
+				PESQUISAR.pesquisar_codigo(Integer.parseInt(COD_INPUT.getText()), tableEstoque);
+			}
+		});
 		
 		PECA_INPUT = new JTextField();
 		PECA_INPUT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				pesquisar_peca(PECA_INPUT.getText());	
+				PESQUISAR.pesquisar_peca(PECA_INPUT.getText(), tableEstoque);	
 			}
 			
 		});
@@ -127,7 +137,7 @@ public class estoque extends JPanel{
 		MARCA_INPUT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				pesquisar_marca(MARCA_INPUT.getText());
+				PESQUISAR.pesquisar_marca(MARCA_INPUT.getText(), tableEstoque);
 				
 			}
 		});
@@ -139,7 +149,7 @@ public class estoque extends JPanel{
 		MODELO_INPUT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				pesquisar_modelo(MODELO_INPUT.getText());
+				PESQUISAR.pesquisar_modelo(MODELO_INPUT.getText(), tableEstoque);
 			}
 		});
 		MODELO_INPUT.setColumns(10);
@@ -154,6 +164,11 @@ public class estoque extends JPanel{
 		ANO_DROPDOWN.setEditable(true);
 		ANO_DROPDOWN.setBounds(386, 39, 86, 22);
 		add(ANO_DROPDOWN);
+		ANO_DROPDOWN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PESQUISAR.pesquisar_ano(ANO_DROPDOWN, tableEstoque);
+			}
+			});
 		
 		JButton PESQUISAR_BTN = new JButton("PESQUISAR");
 		PESQUISAR_BTN.addActionListener(new ActionListener() {
@@ -184,96 +199,6 @@ public class estoque extends JPanel{
 		EDITAR_BTN.setBounds(529, 39, 112, 23);
 		add(EDITAR_BTN);
 	}
-
-
-// metodo para pesquisas com filtro
-
-private void pesquisar_peca(String Nome) {
-	Connection conexao = null;
-    PreparedStatement comando = null;
-    String sql= "select * from peca where Nome like ?";
-	
-	try {
-		conexao = ClasseConexao.Conectar();
-		comando = conexao.prepareStatement(sql);
-		comando.setString(1, PECA_INPUT.getText() + "%");
-		ResultSet resultado = comando.executeQuery();
-		
-		tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
-		
-	} catch (SQLException e) {
-        e.printStackTrace();
-        return;
-
-    } finally {
-        ClasseConexao.FecharConexao(conexao);
-        try {
-            if (comando != null) {
-                comando.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-  }
-
-private void pesquisar_modelo(String Modelo) {
-	Connection conexao = null;
-    PreparedStatement comando = null;
-    String sql= "select * from peca where Modelo like ?";
-	
-	try {
-		conexao = ClasseConexao.Conectar();
-		comando = conexao.prepareStatement(sql);
-		comando.setString(1, MODELO_INPUT.getText() + "%");
-		ResultSet resultado = comando.executeQuery();
-		
-		tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
-		
-	} catch (SQLException e) {
-        e.printStackTrace();
-        return;
-
-    } finally {
-        ClasseConexao.FecharConexao(conexao);
-        try {
-            if (comando != null) {
-                comando.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-  }
-	
-private void pesquisar_marca(String Marca) {
-	Connection conexao = null;
-    PreparedStatement comando = null;
-    String sql= "select * from peca where Marca like ?";
-	
-	try {
-		conexao = ClasseConexao.Conectar();
-		comando = conexao.prepareStatement(sql);
-		comando.setString(1, MARCA_INPUT.getText() + "%");
-		ResultSet resultado = comando.executeQuery();
-		
-		tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
-		
-	} catch (SQLException e) {
-        e.printStackTrace();
-        return;
-
-    } finally {
-        ClasseConexao.FecharConexao(conexao);
-        try {
-            if (comando != null) {
-                comando.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-  }
- }
+}
 
 

@@ -10,6 +10,9 @@ package Conector;
 
 	
 	import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
+import net.proteanit.sql.DbUtils;
 	
 	public class Crud_cliente {
 		
@@ -72,6 +75,7 @@ package Conector;
 					
 					
 					JOptionPane.showMessageDialog(null, "Dados alterados com sucesso");
+					
 					
 					
 				}
@@ -153,4 +157,61 @@ package Conector;
 				}
 			}
 		}
+		
+		public void pesquisar_cliente(String Nome, JTable tableCliente) {
+			Connection conexao = null;
+		    PreparedStatement comando = null;
+		    String sql= "select * from cliente where Nome like ?";
+			
+			try {
+				conexao = ClasseConexao.Conectar();
+				comando = conexao.prepareStatement(sql);
+				comando.setString(1, Nome + "%");
+				ResultSet resultado = comando.executeQuery();
+				
+				tableCliente.setModel(DbUtils.resultSetToTableModel(resultado)); 
+				
+			} catch (SQLException e) {
+		        e.printStackTrace();
+		        return;
+
+		    } finally {
+		        ClasseConexao.FecharConexao(conexao);
+		        try {
+		            if (comando != null) {
+		                comando.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		  }
+		public void pesquisar_codigo(int IdCliente, JTable tableCliente) {
+			Connection conexao = null;
+		    PreparedStatement comando = null;
+		    String sql= "select * from cliente where IdCliente=?";
+			
+			try {
+				conexao = ClasseConexao.Conectar();
+				comando = conexao.prepareStatement(sql);
+				comando.setInt(1, IdCliente);
+				ResultSet resultado = comando.executeQuery();
+				
+				tableCliente.setModel(DbUtils.resultSetToTableModel(resultado)); 
+				
+			} catch (SQLException e) {
+		        e.printStackTrace();
+		        return;
+
+		    } finally {
+		        ClasseConexao.FecharConexao(conexao);
+		        try {
+		            if (comando != null) {
+		                comando.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		  }
 	}	

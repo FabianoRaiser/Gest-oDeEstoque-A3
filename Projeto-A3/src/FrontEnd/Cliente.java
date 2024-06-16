@@ -3,7 +3,6 @@ package FrontEnd;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
-import Conector.ClasseConexao;
 import Conector.Crud_cliente;
 import net.proteanit.sql.DbUtils;
 
@@ -12,8 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -29,12 +26,13 @@ public class Cliente extends JPanel {
 	private JTextField NOME_INPUT;
 	private JButton CADASTRAR_BTN;
 	private JButton EDITAR_BTN;
+	
 
 	/**
 	 * Create the application.
 	 */
 	Crud_cliente dataServer = new Crud_cliente();
-	
+	Crud_cliente PESQUISAR = new Crud_cliente();
 	private void AtualizaTabela(JTable table) {
 		ResultSet resultado = dataServer.Selecionar();
 		try {
@@ -79,12 +77,23 @@ public class Cliente extends JPanel {
 		COD_INPUT.setBounds(66, 18, 86, 20);
 		add(COD_INPUT);
 		COD_INPUT.setColumns(10);
+		COD_INPUT.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				String codigoText = COD_INPUT.getText().trim();
+	            if (codigoText.isEmpty()) {
+	            	AtualizaTabela(tableCliente);
+	            } else {
+	            }
+				PESQUISAR.pesquisar_codigo(Integer.parseInt(COD_INPUT.getText()), tableCliente);
+			}
+		});
 		
 		NOME_INPUT = new JTextField();
 		NOME_INPUT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
-				pesquisar_cliente(NOME_INPUT.getText());
+				PESQUISAR.pesquisar_cliente(NOME_INPUT.getText(),tableCliente);
 			}
 			
 		});
@@ -92,14 +101,14 @@ public class Cliente extends JPanel {
 		NOME_INPUT.setBounds(66, 53, 454, 20);
 		add(NOME_INPUT);
 		
-		JButton PESQUISAR_BTN = new JButton("PESQUISAR");
-		PESQUISAR_BTN.addActionListener(new ActionListener() {
+		JButton ATUALIZAR_BTN = new JButton("ATUALIZAR");
+		ATUALIZAR_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AtualizaTabela(tableCliente);
 			}
 		});
-		PESQUISAR_BTN.setBounds(10, 84, 110, 23);
-		add(PESQUISAR_BTN);
+		ATUALIZAR_BTN.setBounds(10, 84, 110, 23);
+		add(ATUALIZAR_BTN);
 		
 		CADASTRAR_BTN = new JButton("CADASTRAR");
 		CADASTRAR_BTN.addActionListener(new ActionListener() {
@@ -121,35 +130,4 @@ public class Cliente extends JPanel {
 		EDITAR_BTN.setBounds(530, 52, 110, 23);
 		add(EDITAR_BTN);
 	}
-	
-	// metodo para pesquisas com filtro
-
-	private void pesquisar_cliente(String Nome) {
-		Connection conexao = null;
-	    PreparedStatement comando = null;
-	    String sql= "select * from cliente where Nome like ?";
-		
-		try {
-			conexao = ClasseConexao.Conectar();
-			comando = conexao.prepareStatement(sql);
-			comando.setString(1, NOME_INPUT.getText() + "%");
-			ResultSet resultado = comando.executeQuery();
-			
-			tableCliente.setModel(DbUtils.resultSetToTableModel(resultado)); 
-			
-		} catch (SQLException e) {
-	        e.printStackTrace();
-	        return;
-
-	    } finally {
-	        ClasseConexao.FecharConexao(conexao);
-	        try {
-	            if (comando != null) {
-	                comando.close();
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	  }
 }
