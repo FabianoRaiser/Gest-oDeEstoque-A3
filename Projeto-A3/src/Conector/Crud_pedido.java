@@ -8,7 +8,11 @@ package Conector;
 	import java.sql.SQLException;
 	import java.sql.Statement;
 
-	import javax.swing.JOptionPane;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+
+import net.proteanit.sql.DbUtils;
 
 
 	public class Crud_pedido {
@@ -132,7 +136,7 @@ package Conector;
 			
 			try {
 				conexao = ClasseConexao.Conectar();
-				String sql = "SELECT * FROM pedido";
+				String sql = "SELECT IdPedidoCompra AS Pedido, IdPeca AS Peças, Quantidade, Concluido AS Status FROM pedido";
 				comando = conexao.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_READ_ONLY);
 				resultado = comando.executeQuery(sql);
 				
@@ -156,7 +160,7 @@ package Conector;
 			
 			try {
 				conexao = ClasseConexao.Conectar();
-				String sql = "INSERT INTO pedido(IdPeca,Quantidade) VALUES(?,?)";
+				String sql = "INSERT INTO pedido(IdPeca,Quantidade,Concluido) VALUES(?,?,'PROCESSANDO')";
 				
 				comando = conexao.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 				comando.setInt(1,IdPeca);
@@ -186,6 +190,185 @@ package Conector;
 			}
 			
 			
+		}
+		
+		public void pesquisar_peca(int cod, JTable tableEstoque) {
+			Connection conexao = null;
+		    PreparedStatement comando = null;
+		    String sql= "select * from pedido where IdPeca like ?";
+			
+			try {
+				conexao = ClasseConexao.Conectar();
+				comando = conexao.prepareStatement(sql);
+				comando.setString(1, cod + "%");
+				ResultSet resultado = comando.executeQuery();
+				
+				tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
+				
+			} catch (SQLException e) {
+		        e.printStackTrace();
+		        return;
+
+		    } finally {
+		        ClasseConexao.FecharConexao(conexao);
+		        try {
+		            if (comando != null) {
+		                comando.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		  }
+
+		public void pesquisar_modelo(String Modelo, JTable tableEstoque) {
+			Connection conexao = null;
+		    PreparedStatement comando = null;
+		    String sql= "select * from pedido where Modelo like ?";
+			
+			try {
+				conexao = ClasseConexao.Conectar();
+				comando = conexao.prepareStatement(sql);
+				comando.setString(1, Modelo + "%");
+				ResultSet resultado = comando.executeQuery();
+				
+				tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
+				
+			} catch (SQLException e) {
+		        e.printStackTrace();
+		        return;
+
+		    } finally {
+		        ClasseConexao.FecharConexao(conexao);
+		        try {
+		            if (comando != null) {
+		                comando.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		  }
+			
+		public void pesquisar_marca(String Marca, JTable tableEstoque) {
+			Connection conexao = null;
+		    PreparedStatement comando = null;
+		    String sql= "select * from pedido where Marca like ?";
+			
+			try {
+				conexao = ClasseConexao.Conectar();
+				comando = conexao.prepareStatement(sql);
+				comando.setString(1,Marca + "%");
+				ResultSet resultado = comando.executeQuery();
+				
+				tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
+				
+			} catch (SQLException e) {
+		        e.printStackTrace();
+		        return;
+
+		    } finally {
+		        ClasseConexao.FecharConexao(conexao);
+		        try {
+		            if (comando != null) {
+		                comando.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		  }
+		public void pesquisar_ano(JComboBox<Object> ANO_DROPDOWN, JTable tableEstoque) {
+
+	        Connection conexao = null;
+	        PreparedStatement comando = null;
+	        String sql = "SELECT * FROM pedido WHERE Ano=?";
+
+	        try {
+	            conexao = ClasseConexao.Conectar();
+	            comando = conexao.prepareStatement(sql);
+	            comando.setString(1, ANO_DROPDOWN.getSelectedItem() .toString());
+	            ResultSet resultado = comando.executeQuery();
+
+	            tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado));
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            ClasseConexao.FecharConexao(conexao);
+	            try {
+	                if (comando != null) {
+	                    comando.close();
+	                }
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	   }
+		
+		public void pesquisar_codigo(int IdPeca, JTable tableEstoque) {
+			Connection conexao = null;
+		    PreparedStatement comando = null;
+		    String sql= "select * from pedido where IdPeca=?";
+			
+			try {
+				conexao = ClasseConexao.Conectar();
+				comando = conexao.prepareStatement(sql);
+				comando.setString(1,IdPeca + "%"); 
+				ResultSet resultado = comando.executeQuery();
+				
+				tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
+				
+				
+			} catch (SQLException e) {
+		        e.printStackTrace();
+		        return;
+
+		    } finally {
+		        ClasseConexao.FecharConexao(conexao);
+		        try {
+		            if (comando != null) {
+		                comando.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		  }
+		
+		public void Inserir_peca(int IdPedidoCompra, int IdPeca, int Quantidade)
+		{
+			Connection conexao = null;
+			PreparedStatement comando = null;
+			ResultSet resultado = null;
+			
+			try {
+				conexao = ClasseConexao.Conectar();
+				String sql = "INSERT INTO pedido(IdPedidoCompra, IdPeca, Quantidade) VALUES(?,?,?)";
+				
+				comando = conexao.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+				comando.setInt(1, IdPedidoCompra);
+				comando.setInt(2, IdPeca);
+				comando.setInt(3, Quantidade);
+				if(comando.executeUpdate()>0) {
+					resultado = comando.getGeneratedKeys(); // Pega o código gerado
+					if(resultado.next()) {
+						JOptionPane.showMessageDialog(null, "PEÇA ADICIONADA COM SUCESSO  ");
+					}
+					
+				}
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}finally {
+				ClasseConexao.FecharConexao(conexao);
+				try {
+					comando.close();
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		
 		/*

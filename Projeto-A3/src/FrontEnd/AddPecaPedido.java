@@ -1,12 +1,12 @@
 package FrontEnd;
 
 import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Conector.ClasseConexao;
 import Conector.Crud_OS;
+import Conector.Crud_pedido;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -20,7 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class AddPeca extends JFrame {
+public class AddPecaPedido extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -32,15 +32,15 @@ public class AddPeca extends JFrame {
 	private JTextField ANO_INPUT;
 	private JTextField COR_INPUT;
 	private JTextField COD_INPUT;
-	Crud_OS ADICIONA = new Crud_OS();
+	Crud_pedido ADICIONA = new Crud_pedido();
 	JanelaUI UI = new JanelaUI();
 	private JTextField QNT_INPUT;
-	private JTextField COD_OS;
+	private JTextField COD_PEDIDO;
 
 	/**
 	 * Create the frame.
 	 */
-	public AddPeca() {	
+	public AddPecaPedido() {	
 		
 		// Config da janela
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -57,7 +57,7 @@ public class AddPeca extends JFrame {
 		JButton ADD_BTN = new JButton("ADICIONAR");
 		ADD_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ADICIONA.Inserir_peca(Integer.parseInt(COD_OS.getText()), Integer.parseInt(COD_INPUT.getText()),Integer.parseInt(QNT_INPUT.getText()));
+				ADICIONA.Inserir_peca(Integer.parseInt(COD_PEDIDO.getText()), Integer.parseInt(COD_INPUT.getText()),Integer.parseInt(QNT_INPUT.getText()));
 			}
 		});
 		ADD_BTN.setBounds(244, 126, 110, 23);
@@ -201,7 +201,7 @@ public class AddPeca extends JFrame {
 		CONSULTA_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Consultar(Integer.parseInt(COD_INPUT.getText()));
-				setar_OS();
+				setar_Pedido();
 			}
 			});
 		CONSULTA_BTN.setBounds(152, 7, 100, 23);
@@ -216,15 +216,15 @@ public class AddPeca extends JFrame {
 		lblNewLabel.setBounds(10, 130, 67, 14);
 		contentPane.add(lblNewLabel);
 		
-		COD_OS = new JTextField();
-		COD_OS.setEditable(true);
-		COD_OS.setBounds(388, 8, 86, 20);
-		contentPane.add(COD_OS);
-		COD_OS.setColumns(10);
+		COD_PEDIDO = new JTextField();
+		COD_PEDIDO.setEditable(true);
+		COD_PEDIDO.setBounds(388, 8, 86, 20);
+		contentPane.add(COD_PEDIDO);
+		COD_PEDIDO.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("OS");
-		lblNewLabel_1.setBounds(332, 11, 46, 14);
-		contentPane.add(lblNewLabel_1);
+		JLabel pedidoLabel = new JLabel("PEDIDO");
+		pedidoLabel.setBounds(332, 11, 46, 14);
+		contentPane.add(pedidoLabel);
 	}
 
 	private ResultSet Consultar(int IdPeca) {
@@ -269,18 +269,18 @@ public class AddPeca extends JFrame {
 	    }
 	  }
 	
-	private ResultSet setar_OS() {
+	private ResultSet setar_Pedido() {
 	    Connection conexao = null;
 	    PreparedStatement comando = null;
 	    ResultSet resultado = null;
 
 	    try {
 	        conexao = ClasseConexao.Conectar();
-	        String sql = "SELECT MAX(IdOS) FROM os";
+	        String sql = "SELECT MAX(IdPedidoCompra) FROM pedido";
 	        comando = conexao.prepareStatement(sql);
 	        resultado = comando.executeQuery();
 	        if (resultado.next()) {
-	        	COD_OS.setText(resultado.getString(1));
+	        	COD_PEDIDO.setText(resultado.getString(1));
 	        	
 			} else {
 

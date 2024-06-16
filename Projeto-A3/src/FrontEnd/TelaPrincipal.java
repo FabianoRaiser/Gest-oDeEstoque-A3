@@ -16,6 +16,8 @@ public class TelaPrincipal {
 
     private JFrame frame;
     private JTabbedPane painel;
+    
+    JanelaUI ui = new JanelaUI();
 
     /**
      * Launch the application.
@@ -47,6 +49,7 @@ public class TelaPrincipal {
         frame.setBounds(100, 100, 690, 545);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(null);
+        ui.LookAndFeel();
         
         painel = new JTabbedPane();
         painel.setBounds(5, 25, 665, 490);
