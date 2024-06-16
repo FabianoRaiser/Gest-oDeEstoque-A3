@@ -197,6 +197,14 @@ public class estoque extends JPanel{
 		});
 		EDITAR_BTN.setBounds(529, 39, 112, 23);
 		add(EDITAR_BTN);
+		
+		JButton BAIXA_BTN = new JButton("DAR BAIXA");
+		BAIXA_BTN.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		BAIXA_BTN.setBounds(529, 68, 112, 23);
+		add(BAIXA_BTN);
 	}
 }
 
