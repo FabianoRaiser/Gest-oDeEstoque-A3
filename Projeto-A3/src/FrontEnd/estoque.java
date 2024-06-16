@@ -201,6 +201,8 @@ public class estoque extends JPanel{
 		JButton BAIXA_BTN = new JButton("DAR BAIXA");
 		BAIXA_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JFrame darBaixa = new BaixaPeca();
+				darBaixa.setVisible(true);
 			}
 		});
 		BAIXA_BTN.setBounds(529, 68, 112, 23);

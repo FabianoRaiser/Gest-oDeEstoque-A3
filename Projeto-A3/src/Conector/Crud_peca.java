@@ -302,7 +302,42 @@ import net.proteanit.sql.DbUtils;
 		        }
 		    }
 		  }
-			
+		public void baixar_estoque(int IdPeca, double Quantidade) {
+	        Connection conexao = null;
+	        PreparedStatement comando = null;
+
+	        try {
+	            conexao = ClasseConexao.Conectar();
+	            String sql = "UPDATE peca SET Quantidade = Quantidade - ? WHERE idPeca = ? AND Quantidade >= ?";
+
+	            comando = conexao.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+	            comando.setDouble(1, Quantidade);
+	            comando.setInt(2, IdPeca);
+	            comando.setDouble(3, Quantidade);
+
+	            int rowsAffected = comando.executeUpdate();
+	            if (rowsAffected > 0) {
+	                JOptionPane.showMessageDialog(null, "Baixa de Estoque Realizada com Sucesso");
+	            } else {
+	                JOptionPane.showMessageDialog(null, "Falha ao realizar baixa de estoque: estoque insuficiente ou produto não encontrado");
+	            }
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            JOptionPane.showMessageDialog(null, "Erro ao realizar baixa de estoque: " + e.getMessage());
+	        } finally {
+	            if (comando != null) {
+	                try {
+	                    comando.close();
+	                } catch (SQLException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	            if (conexao != null) {
+	                ClasseConexao.FecharConexao(conexao);
+	            }
+	        }
+	    }
 		
 	}
 
