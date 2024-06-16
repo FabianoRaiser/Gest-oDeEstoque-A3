@@ -170,6 +170,7 @@ public class NovaOS extends JFrame {
 	        	NOME_INPUT.setText(resultado.getString(2));
 	        } else {
 	        	JOptionPane.showMessageDialog(null, "CLIENTE NÃO CADASTRADO");
+	        	IdCli.setText(null);
 
 			}
 

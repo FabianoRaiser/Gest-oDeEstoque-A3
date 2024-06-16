@@ -37,9 +37,10 @@ public class BaixaPeca extends JFrame {
 	private JTextField MODELO_INPUT;
 	private JTextField ANO_INPUT;
 	private JTextField COR_INPUT;
-	private JTextField QUANTIDADE_INPUT;
+	private JTextField BAIXAR_INPUT;
 	
 	Crud_peca peca = new Crud_peca();
+	private JTextField QUANTIDADE_INPUT;
 
 	private void ValidaDados() {
 //			if(NOME_INPUT.getText().isEmpty()) {
@@ -95,8 +96,17 @@ public class BaixaPeca extends JFrame {
 				
 				// >> CRUD UPDATE
 				
-				peca.Alterar(Integer.parseInt(COD_INPUT.getText()), NOME_INPUT.getText(), Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(), Integer.parseInt(ANO_INPUT.getText()), COR_INPUT.getText(), Double.parseDouble(QUANTIDADE_INPUT.getText()));
-				
+				peca.baixar_estoque(Integer.parseInt(COD_INPUT.getText()), Double.parseDouble(BAIXAR_INPUT.getText()));
+				NOME_INPUT.setText(null);
+	        	PESO_INPUT.setText(null);
+	        	MEDIDA_INPUT.setText(null);
+	        	MARCA_INPUT.setText(null);
+	        	MODELO_INPUT.setText(null);
+	        	ANO_INPUT.setText(null);
+	        	COR_INPUT.setText(null);
+	        	BAIXAR_INPUT.setText(null);
+	        	QUANTIDADE_INPUT.setText(null);
+	        	COD_INPUT.setText(null);
 				
 				//JOptionPane.showMessageDialog(null, "Peça cadastrada!");
 			}
@@ -147,8 +157,8 @@ public class BaixaPeca extends JFrame {
 		anoLabel.setBounds(263, 98, 36, 14);
 		contentPane.add(anoLabel);
 		
-		JLabel quantidadeLabel = new JLabel("QUANTIDADE:");
-		quantidadeLabel.setBounds(10, 132, 86, 14);
+		JLabel quantidadeLabel = new JLabel("QUANTIDADE A SER BAIXADA:");
+		quantidadeLabel.setBounds(10, 132, 154, 14);
 		contentPane.add(quantidadeLabel);
 		
 		// Config dos Inputs
@@ -259,10 +269,10 @@ public class BaixaPeca extends JFrame {
 		COR_INPUT.setBounds(401, 94, 68, 20);
 		contentPane.add(COR_INPUT);
 		
-		QUANTIDADE_INPUT = new JTextField();
-		QUANTIDADE_INPUT.setColumns(10);
-		QUANTIDADE_INPUT.setBounds(97, 129, 89, 20);
-		contentPane.add(QUANTIDADE_INPUT);
+		BAIXAR_INPUT = new JTextField();
+		BAIXAR_INPUT.setColumns(10);
+		BAIXAR_INPUT.setBounds(175, 129, 89, 20);
+		contentPane.add(BAIXAR_INPUT);
 		
 		JButton CONSULTAR_BTN = new JButton("CONSULTAR");
 		CONSULTAR_BTN.addActionListener(new ActionListener() {
@@ -272,7 +282,17 @@ public class BaixaPeca extends JFrame {
 		});
 		CONSULTAR_BTN.setBounds(154, 12, 110, 23);
 		contentPane.add(CONSULTAR_BTN);
-		QUANTIDADE_INPUT.addKeyListener(new KeyListener() {
+		
+		JLabel lblNewLabel = new JLabel("QUANTIDADE:");
+		lblNewLabel.setBounds(303, 132, 78, 14);
+		contentPane.add(lblNewLabel);
+		
+		QUANTIDADE_INPUT = new JTextField();
+		QUANTIDADE_INPUT.setEditable(false);
+		QUANTIDADE_INPUT.setBounds(383, 129, 86, 20);
+		contentPane.add(QUANTIDADE_INPUT);
+		QUANTIDADE_INPUT.setColumns(10);
+		BAIXAR_INPUT.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char c = e.getKeyChar();
@@ -320,7 +340,7 @@ private ResultSet Consultar(int IdPeca) {
         	MODELO_INPUT.setText(resultado.getString(7));
         	ANO_INPUT.setText(resultado.getString(8));
         	COR_INPUT.setText(resultado.getString(9));
-        	QUANTIDADE_INPUT.setText(resultado.getString(10));
+        	QUANTIDADE_INPUT.setText(resultado.getString(3));
 		} else {
 
 		}
