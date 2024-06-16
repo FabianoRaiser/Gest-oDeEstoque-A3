@@ -160,7 +160,7 @@ import net.proteanit.sql.DbUtils;
 			
 			try {
 				conexao = ClasseConexao.Conectar();
-				String sql = "INSERT INTO pedido(IdPeca,Quantidade) VALUES(?,?)";
+				String sql = "INSERT INTO pedido(IdPeca,Quantidade,Concluido) VALUES(?,?,'PROCESSANDO')";
 				
 				comando = conexao.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 				comando.setInt(1,IdPeca);
