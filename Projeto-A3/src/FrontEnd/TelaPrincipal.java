@@ -59,12 +59,13 @@ public class TelaPrincipal {
         JPanel pedidos = new Pedidos();
         JPanel clientes = new Cliente();
         JPanel ordens	= new OrdensDeServico();
+        JPanel faturamento = new Faturamento();
         
         painel.addTab("Estoque", estoque);
         painel.addTab("Pedidos", pedidos);
         painel.addTab("Clientes", clientes);
         painel.addTab("Ordens", ordens);
-        
+        painel.addTab("Faturamento", faturamento);
         
         JMenuBar menuBar = new JMenuBar();
         menuBar.setBounds(0, 0, 784, 22);
