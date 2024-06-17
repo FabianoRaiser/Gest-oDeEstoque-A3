@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16/06/2024 às 21:29
+-- Tempo de geração: 17/06/2024 às 14:43
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -58,8 +58,8 @@ INSERT INTO `cliente` (`IdCliente`, `Nome`, `Telefone`, `Endereco`) VALUES
 (5, 'João Silva', '98765-8765', 'Travessa das Acácias'),
 (6, 'João Silva', '98765-8765', 'Travessa das Acácias'),
 (7, 'João Silva', '98765-8765', 'Travessa das Acácias'),
-(8, 'guizas', '1111', 'teste'),
-(9, 'Teste ', '11111-1111', 'Testando endereco');
+(8, 'Ana Costa', '66666-6666', 'Rua XV de Novembro, 1011'),
+(9, 'Pedro Santos', '55555-5555', 'Av. Borges de Medeiros, 1313');
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,8 @@ CREATE TABLE `faturamento` (
   `IdFaturamento` int(11) NOT NULL,
   `IdOS` int(11) DEFAULT NULL,
   `ValorServico` double DEFAULT NULL,
-  `ValorPecas` double DEFAULT NULL
+  `ValorPecas` double DEFAULT NULL,
+  `IdCliente` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -107,31 +108,6 @@ INSERT INTO `os` (`IdOS`, `IdCliente`, `Descricao`, `ValorServico`, `ValorTotal`
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `os_peca`
---
-
-CREATE TABLE `os_peca` (
-  `IdOS` int(11) NOT NULL,
-  `IdPeca` int(11) NOT NULL,
-  `Quantidade` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Despejando dados para a tabela `os_peca`
---
-
-INSERT INTO `os_peca` (`IdOS`, `IdPeca`, `Quantidade`) VALUES
-(1, 2, 4),
-(11, 2, 3),
-(11, 3, 3),
-(12, 1, 2),
-(12, 2, 2),
-(12, 3, 1),
-(12, 4, 2);
-
--- --------------------------------------------------------
-
---
 -- Estrutura para tabela `peca`
 --
 
@@ -153,11 +129,11 @@ CREATE TABLE `peca` (
 --
 
 INSERT INTO `peca` (`IdPeca`, `Nome`, `Quantidade`, `Peso`, `Medida`, `Marca`, `Modelo`, `Ano`, `Cor`, `Valor`) VALUES
-(1, 'Amortecedor Frontal', NULL, 5, 'kg', 'Cofap', 'B47768', 2022, 'Preto', 350),
-(2, 'Velas de Ignição', NULL, 0.2, 'kg', 'NGK', 'BKR6E', 2023, 'Metalico', 80),
-(3, ' Disco de Freio', NULL, 7, 'kg', 'Bosch', 'BD8001', 2021, 'Prata', 200),
-(4, 'Filtro de Ar', NULL, 0.5, 'kg', 'Fram', 'CA9997', 2022, 'Branco', 60),
-(5, 'Bateria Automotiva', NULL, 18, 'kg', 'Moura', 'M70ED', 2023, 'Preto', 450);
+(1, 'Amortecedor Frontal', 10, 5, 'kg', 'Cofap', 'B47768', 2022, 'Preto', 350),
+(2, 'Velas de Ignição', 20, 0.2, 'kg', 'NGK', 'BKR6E', 2023, 'Metalico', 80),
+(3, ' Disco de Freio', 15, 7, 'kg', 'Bosch', 'BD8001', 2021, 'Prata', 200),
+(4, 'Filtro de Ar', 25, 0.5, 'kg', 'Fram', 'CA9997', 2022, 'Branco', 60),
+(5, 'Bateria Automotiva', 50, 18, 'kg', 'Moura', 'M70ED', 2023, 'Preto', 450);
 
 -- --------------------------------------------------------
 
@@ -178,18 +154,6 @@ CREATE TABLE `pedido` (
 
 INSERT INTO `pedido` (`IdPedidoCompra`, `IdPeca`, `Quantidade`, `Concluido`) VALUES
 (1, 4, 1, NULL);
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `pedido_peca`
---
-
-CREATE TABLE `pedido_peca` (
-  `IdPedido` int(11) NOT NULL,
-  `IdPeca` int(11) NOT NULL,
-  `Quantidade` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tabelas despejadas
@@ -213,7 +177,7 @@ ALTER TABLE `cliente`
 --
 ALTER TABLE `faturamento`
   ADD PRIMARY KEY (`IdFaturamento`),
-  ADD KEY `IdOS` (`IdOS`);
+  ADD KEY `IdCliente` (`IdCliente`);
 
 --
 -- Índices de tabela `os`
@@ -222,13 +186,6 @@ ALTER TABLE `os`
   ADD PRIMARY KEY (`IdOS`),
   ADD KEY `IdCliente` (`IdCliente`),
   ADD KEY `IdPeca` (`IdPeca`) USING BTREE;
-
---
--- Índices de tabela `os_peca`
---
-ALTER TABLE `os_peca`
-  ADD PRIMARY KEY (`IdOS`,`IdPeca`),
-  ADD KEY `IdPeca` (`IdPeca`);
 
 --
 -- Índices de tabela `peca`
@@ -241,13 +198,6 @@ ALTER TABLE `peca`
 --
 ALTER TABLE `pedido`
   ADD PRIMARY KEY (`IdPedidoCompra`),
-  ADD KEY `IdPeca` (`IdPeca`);
-
---
--- Índices de tabela `pedido_peca`
---
-ALTER TABLE `pedido_peca`
-  ADD PRIMARY KEY (`IdPedido`,`IdPeca`),
   ADD KEY `IdPeca` (`IdPeca`);
 
 --
@@ -270,7 +220,7 @@ ALTER TABLE `cliente`
 -- AUTO_INCREMENT de tabela `faturamento`
 --
 ALTER TABLE `faturamento`
-  MODIFY `IdFaturamento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdFaturamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `os`
@@ -304,6 +254,7 @@ ALTER TABLE `baixaestoque`
 -- Restrições para tabelas `faturamento`
 --
 ALTER TABLE `faturamento`
+  ADD CONSTRAINT `IdCliente` FOREIGN KEY (`IdCliente`) REFERENCES `cliente` (`IdCliente`),
   ADD CONSTRAINT `faturamento_ibfk_1` FOREIGN KEY (`IdOS`) REFERENCES `os` (`IdOS`);
 
 --
@@ -314,24 +265,10 @@ ALTER TABLE `os`
   ADD CONSTRAINT `os_ibfk_1` FOREIGN KEY (`IdCliente`) REFERENCES `cliente` (`IdCliente`);
 
 --
--- Restrições para tabelas `os_peca`
---
-ALTER TABLE `os_peca`
-  ADD CONSTRAINT `os_peca_ibfk_1` FOREIGN KEY (`IdOS`) REFERENCES `os` (`IdOS`),
-  ADD CONSTRAINT `os_peca_ibfk_2` FOREIGN KEY (`IdPeca`) REFERENCES `peca` (`IdPeca`);
-
---
 -- Restrições para tabelas `pedido`
 --
 ALTER TABLE `pedido`
   ADD CONSTRAINT `pedido_ibfk_1` FOREIGN KEY (`IdPeca`) REFERENCES `peca` (`IdPeca`);
-
---
--- Restrições para tabelas `pedido_peca`
---
-ALTER TABLE `pedido_peca`
-  ADD CONSTRAINT `pedido_peca_ibfk_1` FOREIGN KEY (`IdPedido`) REFERENCES `pedido` (`IdPedidoCompra`),
-  ADD CONSTRAINT `pedido_peca_ibfk_2` FOREIGN KEY (`IdPeca`) REFERENCES `peca` (`IdPeca`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
