@@ -9,6 +9,10 @@ package Conector;
 	import java.sql.Statement;
 
 	import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+
+import net.proteanit.sql.DbUtils;
 
 
 	public class Crud_OS {
@@ -187,5 +191,94 @@ package Conector;
 			
 			
 		}
+		
+		public void pesquisar_OS(int IdOS, JTable tableEstoque) {
+			Connection conexao = null;
+		    PreparedStatement comando = null;
+		    String sql= "SELECT c.Nome, c.IdCliente, op.IdOS, op.IdPeca, op.Quantidade, o.ValorTotal FROM cliente c JOIN os o ON c.IdCliente = o.IdCliente JOIN os_peca op ON o.IdOS = op.IdOS WHERE op.IdOS=?";
+			
+			try {
+				conexao = ClasseConexao.Conectar();
+				comando = conexao.prepareStatement(sql);
+				comando.setInt(1,IdOS);
+				ResultSet resultado = comando.executeQuery();
+				
+				tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
+				
+			} catch (SQLException e) {
+		        e.printStackTrace();
+		        return;
+
+		    } finally {
+		        ClasseConexao.FecharConexao(conexao);
+		        try {
+		            if (comando != null) {
+		                comando.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		  }
+		
+		public void pesquisar_idCli(int IdCliente, JTable tableEstoque) {
+			Connection conexao = null;
+		    PreparedStatement comando = null;
+		    String sql= "SELECT c.Nome, c.IdCliente, op.IdOS, op.IdPeca, op.Quantidade, o.ValorTotal FROM cliente c JOIN os o ON c.IdCliente = o.IdCliente JOIN os_peca op ON o.IdOS = op.IdOS WHERE c.IdCliente=?";
+			
+			try {
+				conexao = ClasseConexao.Conectar();
+				comando = conexao.prepareStatement(sql);
+				comando.setInt(1,IdCliente);
+				ResultSet resultado = comando.executeQuery();
+				
+				tableEstoque.setModel(DbUtils.resultSetToTableModel(resultado)); 
+				
+	            } catch (SQLException e) {
+		        e.printStackTrace();
+		        return;
+
+		    } finally {
+		        ClasseConexao.FecharConexao(conexao);
+		        try {
+		            if (comando != null) {
+		                comando.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		  }
+		
+		
+		
+		
+		//TENTATIVA DE SETAR O NOME NA TELA ORDEM DE SERVIÇO QUANDO CHAMA O IdOS - NÃO FUNCIONAL ATE O MOMENTO
+		public void setar_nome(int IdOS) {       
+			Connection conexao = null;
+		    PreparedStatement comando = null;
+		    String sql= "SELECT c.Nome FROM cliente c JOIN os o ON c.IdCliente = o.IdCliente WHERE o.IdOS =?";
+			
+			try {
+				conexao = ClasseConexao.Conectar();
+				comando = conexao.prepareStatement(sql);
+				comando.setInt(1,IdOS);
+			    comando.executeQuery();
+				
+	            } catch (SQLException e) {
+		        e.printStackTrace();
+		        return;
+
+		    } finally {
+		        ClasseConexao.FecharConexao(conexao);
+		        try {
+		            if (comando != null) {
+		                comando.close();
+		            }
+		        } catch (SQLException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		  }
 	}
 		
