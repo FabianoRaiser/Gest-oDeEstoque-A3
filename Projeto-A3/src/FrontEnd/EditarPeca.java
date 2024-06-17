@@ -96,8 +96,15 @@ public class EditarPeca extends JFrame {
 				// >> CRUD UPDATE
 				
 				peca.Alterar(Integer.parseInt(COD_INPUT.getText()), NOME_INPUT.getText(), Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(), Integer.parseInt(ANO_INPUT.getText()), COR_INPUT.getText(), Double.parseDouble(VALOR_INPUT.getText()));
-				
-				
+				NOME_INPUT.setText("");
+				PESO_INPUT.setText("");
+				MEDIDA_INPUT.setText("");
+				MARCA_INPUT.setText("");
+				MODELO_INPUT.setText("");
+				ANO_INPUT.setText("");
+				COR_INPUT.setText("");
+				VALOR_INPUT.setText("");
+				COD_INPUT.setText("");
 				//JOptionPane.showMessageDialog(null, "Peça cadastrada!");
 			}
 		});
@@ -121,7 +128,15 @@ public class EditarPeca extends JFrame {
 				if(escolha == 0) {
 					// >> CRUD DELETE
 					peca.Deletar(Integer.parseInt(COD_INPUT.getText())); //Adicionar a variavel da caixa "IdPeca" usando .getText dentro do "parseInt
-							
+					NOME_INPUT.setText("");
+					PESO_INPUT.setText("");
+					MEDIDA_INPUT.setText("");
+					MARCA_INPUT.setText("");
+					MODELO_INPUT.setText("");
+					ANO_INPUT.setText("");
+					COR_INPUT.setText("");
+					VALOR_INPUT.setText("");
+					COD_INPUT.setText("");	
 				}
 			}
 		});

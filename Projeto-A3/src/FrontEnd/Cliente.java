@@ -3,14 +3,18 @@ package FrontEnd;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
 
+import Conector.ClasseConexao;
 import Conector.Crud_cliente;
 import net.proteanit.sql.DbUtils;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -66,7 +70,7 @@ public class Cliente extends JPanel {
 			public void keyReleased(KeyEvent e) {
 				String codigoText = COD_INPUT.getText().trim();
 	            if (codigoText.isEmpty()) {
-	            	ui.AtualizaTabela(tableCliente, resultado);
+	            	Tabela_Cliente();
 	            } else {
 	            }
 				dataServer.pesquisar_codigo(Integer.parseInt(COD_INPUT.getText()), tableCliente);
@@ -77,6 +81,11 @@ public class Cliente extends JPanel {
 		NOME_INPUT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
+				String NomeText = NOME_INPUT.getText().trim();
+	            if (NomeText.isEmpty()) {
+	            	Tabela_Cliente();
+	            } else {
+	            }
 				dataServer.pesquisar_cliente(NOME_INPUT.getText(),tableCliente);
 			}
 			
@@ -88,7 +97,7 @@ public class Cliente extends JPanel {
 		JButton ATUALIZAR_BTN = new JButton("ATUALIZAR");
 		ATUALIZAR_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ui.AtualizaTabela(tableCliente, resultado);
+				Tabela_Cliente();
 			}
 		});
 		ATUALIZAR_BTN.setBounds(10, 84, 110, 23);
@@ -114,4 +123,48 @@ public class Cliente extends JPanel {
 		EDITAR_BTN.setBounds(530, 52, 110, 23);
 		add(EDITAR_BTN);
 	}
+	private void Tabela_Cliente() {
+	    Connection conexao = null;
+	    PreparedStatement comando = null;
+	    ResultSet resultado = null;
+
+	    try {
+	        conexao = ClasseConexao.Conectar();
+	        String sql = "SELECT * FROM cliente";
+	        comando = conexao.prepareStatement(sql);
+	        resultado = comando.executeQuery();
+	        // Cria o modelo de tabela manualmente
+	        DefaultTableModel model = new DefaultTableModel();
+	        model.addColumn("IdCliente");
+	        model.addColumn("Nome");
+	        model.addColumn("Telefone");
+	        model.addColumn("Endereço");
+
+	        // Adiciona as linhas ao modelo de tabela
+	        while (resultado.next()) {
+	            Object[] row = new Object[4]; // 5 colunas
+	            row[0] = resultado.getInt("IdCliente");
+	            row[1] = resultado.getString("Nome");
+	            row[2] = resultado.getString("Telefone");
+	            row[3] = resultado.getString("Endereco");
+	            model.addRow(row);
+	        }
+
+	        // Define o modelo de tabela para a tabelaPecasOS
+	        tableCliente.setModel(model);
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        ClasseConexao.FecharConexao(conexao);
+	        try {
+	            if (comando != null) {
+	                comando.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
+	
 }

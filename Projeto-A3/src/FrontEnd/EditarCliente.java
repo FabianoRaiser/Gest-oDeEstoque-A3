@@ -114,6 +114,10 @@ public class EditarCliente extends JFrame {
 				}
 				
 				cliente.Alterar(Integer.parseInt(COD_INPUT.getText()), NOME_INPUT.getText(), TELEFONE_INPUT.getText(), ENDERECO_INPUT.getText());
+				NOME_INPUT.setText("");
+				TELEFONE_INPUT.setText("");
+				ENDERECO_INPUT.setText("");
+				COD_INPUT.setText("");
 			}
 		});
 		SALVAR_BTN.setBounds(193, 114, 110, 23);
@@ -130,8 +134,11 @@ public class EditarCliente extends JFrame {
 					
 					
 					Crud_cliente Deletar_cliente = new Crud_cliente();
-					Deletar_cliente.Deletar(Integer.parseInt(COD_INPUT.getText())); 
-							
+					Deletar_cliente.Deletar(Integer.parseInt(COD_INPUT.getText()));
+					NOME_INPUT.setText("");
+					TELEFONE_INPUT.setText("");
+					ENDERECO_INPUT.setText("");
+					COD_INPUT.setText("");		
 				}
 			}
 		});
