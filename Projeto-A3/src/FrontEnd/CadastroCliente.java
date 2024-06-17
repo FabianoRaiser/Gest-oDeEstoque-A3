@@ -101,9 +101,14 @@ public void actionPerformed(ActionEvent e) {
 				{
 					// >> CRUD INSERT
 					novo_cliente.Inserir(NOME_INPUT.getText(), TELEFONE_INPUT.getText(), ENDERECO_INPUT.getText());
-					
+					NOME_INPUT.setText("");
+					TELEFONE_INPUT.setText("");
+					ENDERECO_INPUT.setText("");
 				} else {
 					JOptionPane.showMessageDialog(null, "Cliente NÃO registrado", "Erro!" , JOptionPane.ERROR_MESSAGE);
+					NOME_INPUT.setText("");
+					TELEFONE_INPUT.setText("");
+					ENDERECO_INPUT.setText("");
 					
 				}
 				

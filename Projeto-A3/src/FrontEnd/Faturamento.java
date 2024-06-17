@@ -41,7 +41,7 @@ public class Faturamento extends JPanel {
 		add(scrollPane);
 		
 		tableFaturamento = new JTable();
-		ui.AtualizaTabela(tableFaturamento, resultado);
+		//ui.AtualizaTabela(tableFaturamento, resultado);
 		scrollPane.setViewportView(tableFaturamento);
 		
 		JLabel nFaturamentoLabel = new JLabel("Nº FATURAMENTO:");

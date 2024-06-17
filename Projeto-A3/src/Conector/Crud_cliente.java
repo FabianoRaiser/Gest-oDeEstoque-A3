@@ -139,7 +139,7 @@ import net.proteanit.sql.DbUtils;
 				if(comando.executeUpdate()>0) {
 					resultado = comando.getGeneratedKeys(); // Pega o código gerado
 					if(resultado.next()) {
-						JOptionPane.showMessageDialog(null, "Dados gravados na tabela com o código: " + resultado.getInt(1));
+						JOptionPane.showMessageDialog(null, "Cliente Cadastrado com o código: " + resultado.getInt(1));
 						
 					}
 					

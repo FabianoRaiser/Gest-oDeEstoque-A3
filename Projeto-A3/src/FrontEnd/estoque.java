@@ -169,14 +169,14 @@ public class estoque extends JPanel{
 			}
 			});
 		
-		JButton PESQUISAR_BTN = new JButton("PESQUISAR");
-		PESQUISAR_BTN.addActionListener(new ActionListener() {
+		JButton ATUALIZAR_BTN = new JButton("ATUALIZAR");
+		ATUALIZAR_BTN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AtualizaTabela(tableEstoque);
 			}
 		});
-		PESQUISAR_BTN.setBounds(10, 71, 112, 23);
-		add(PESQUISAR_BTN);
+		ATUALIZAR_BTN.setBounds(10, 71, 112, 23);
+		add(ATUALIZAR_BTN);
 		
 		JButton CADASTRAR_BTN = new JButton("CADASTRAR");
 		CADASTRAR_BTN.addActionListener(new ActionListener() {

@@ -123,7 +123,6 @@ public class JanelaUI {
 		
 		table.setModel(DbUtils.resultSetToTableModel(resultado));
 	}
-
 	
 
 

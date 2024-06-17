@@ -67,7 +67,12 @@ public class OrdensDeServico extends JPanel {
 		
 		OS_INPUT = new JTextField();
 		OS_INPUT.addKeyListener(new KeyAdapter() {
-			public void keyPressed(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
+				String OSText = OS_INPUT.getText().trim();
+	            if (OSText.isEmpty()) {
+	            	Tabela_OS();
+	            } else {
+	            }
 				PESQUISA.pesquisar_OS(Integer.parseInt(OS_INPUT.getText()), tableOrdens);
 			}
 		});
@@ -79,6 +84,11 @@ public class OrdensDeServico extends JPanel {
 		CLI_COD_INPUT.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
+				String CliText = CLI_COD_INPUT.getText().trim();
+	            if (CliText.isEmpty()) {
+	            	Tabela_OS();
+	            } else {
+	            }
 				PESQUISA.pesquisar_idCli(Integer.parseInt(CLI_COD_INPUT.getText()), tableOrdens);
 				 
 			}

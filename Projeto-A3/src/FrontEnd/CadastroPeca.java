@@ -93,6 +93,14 @@ public class CadastroPeca extends JFrame {
 					// >> CRUD INSERT
 					Crud_peca Inserir_peca = new Crud_peca();
 					Inserir_peca.Inserir(NOME_INPUT.getText(),Double.parseDouble(PESO_INPUT.getText()), MEDIDA_INPUT.getText(), MARCA_INPUT.getText(), MODELO_INPUT.getText(),Integer.parseInt(ANO_INPUT.getText()),COR_INPUT.getText(),Double.parseDouble(VALOR_INPUT.getText()));
+					NOME_INPUT.setText("");
+					PESO_INPUT.setText("");
+					MEDIDA_INPUT.setText("");
+					MARCA_INPUT.setText("");
+					MODELO_INPUT.setText("");
+					ANO_INPUT.setText("");
+					COR_INPUT.setText("");
+					VALOR_INPUT.setText("");
 					
 				} else {
 					JOptionPane.showMessageDialog(null, "Peça NÃO registrada", "Erro!" , JOptionPane.ERROR_MESSAGE);
